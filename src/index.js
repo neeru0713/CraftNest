@@ -1,13 +1,29 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { io } from "socket.io-client";
 
+
+
+let socket = io("http://localhost:8080");
+console.log(socket)
+  
+socket.on("broadcast-msg", (msg) => {
+  console.log("msg reveived by client " , msg)
+})
+  
+socket.on("send", (msg) => {
+  console.log("msg reveived by client ", msg);
+});
+  
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <App socket={socket} />
+    
   </React.StrictMode>
 );
 

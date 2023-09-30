@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+// import {io} from "socket.io-client"
+import LandingPage from "./components/LandingPage";
+import mylogo from "./bg-writer.png";
+function App({socket}) {
+
+  
+  // function clickHandler() {
+  //   // let socket = io('http://localhost:8080')
+  //   // console.log("button clicked", socket);
+  //   socket.emit("custom", "hey", "7DytMZxQ8m7Z4WSoAAAJ");
+  //   socket.emit("join-room", "Test")
+  //   // socket.emit("Ritish", 23, "apple employee");
+  //   // socket.emit("message", "ousbdivsbv")
+  // }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+      <LandingPage mylogo={mylogo}/>
     </div>
   );
 }
