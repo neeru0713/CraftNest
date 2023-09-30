@@ -1,14 +1,12 @@
 import React from 'react'
 
-const Modal = ({isOpen}) => {
+const Modal = () => {
   return (
-    <div>
-      {isOpen ? (
-              <div className="flex fixed h-[100%] w-[100%] justify-center">
-                  Modal
-              </div>
-      ) : null}
+   
+    <div className="flex fixed h-[70vh] w-[70%] top-0 left-0 justify-center items-center border border-2 ">
+        Modal
     </div>
+
   );
 }
 
