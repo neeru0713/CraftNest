@@ -2,18 +2,19 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-     animation: changeBackground 6s infinite; 
+     animation: changeBackground 10s infinite; 
+     transition: background 0.3s ease-in-out;
    
 }
 
- @keyframes changeBackground {
-            0% {
-                background-image: url('bg-writer1.png'); /* First image */
-            }
-            50% {
-                background-image: url('bg-writer1.png'); /* Second image */
-            }
-            100% {
-                background-image: url('bg-writer1.png'); /* Third image */
-            }
-        }
+@keyframes changeBackground {
+    0%, 33.33% {
+        background-image: url('bg-writer2.png'); /* First image for 1/3 of the animation duration */
+    }
+    33.34%, 66.67% {
+        background-image: url('bg-photography1.png'); /* Second image for 1/3 of the animation duration */
+    }
+    66.68%, 100% {
+        background-image: url('bg1.png'); /* Third image for 1/3 of the animation duration */
+    }
+}
