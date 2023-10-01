@@ -7,7 +7,7 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isButtonDisable, setIsButtonDisable] = useState(true);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   
 
@@ -40,13 +40,40 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
     }
 
     // check if button needs to be disabled or enabled
-   setIsButtonDisable(!validateEmail(email) || !validatePassword(password));
+  //  setIsButtonDisable(!validateEmail(email) || !validatePassword(password));
 
   };
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    alert('efef')
+    debugger
+    const postData = {
+      email: email,
+      password: password,
+    };
+
+    fetch("http://localhost:8080/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other headers if needed
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parse the JSON response
+      })
+      .then((data) => {
+        // Handle the successful response data
+        console.log("Data:", data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error:", error);
+      });
 
    
   };

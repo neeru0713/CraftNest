@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import photo from "../photography.jpg"
 import AuthPage from "./AuthPage";
-const Modal = () => {
-    const [whichAuthPage, setWhichAuthPage] = useState("login");
+const Modal = ({ setIsModalOpen }) => {
+  const [whichAuthPage, setWhichAuthPage] = useState("login");
+ const modalRef = useRef(null);
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.keyCode === 27) {
+        setIsModalOpen(false);
+      }
+    };
+
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeKey);
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div
+      ref={modalRef}
       className={`flex ${
         whichAuthPage === "login" ? "flex-row " : "flex-row-reverse"
-      } fixed h-[80vh] w-[50%] top-16 left-[27%] justify-center items-center border border-none rounded-lg`}
+      } fixed h-[75%] w-[50%] top-16 left-[27%] justify-center items-center border border-none rounded-lg`}
     >
       <div
         className={`w-[50%] h-[100%] bg-[#f6f8f7] flex flex-col justify-between ${
@@ -28,7 +52,7 @@ const Modal = () => {
 
         <img src={photo} className="h-[50%]" />
       </div>
-    
+
       <div
         className={`w-[50%] h-[100%] text-black auth-graintant  ${
           whichAuthPage === "login"

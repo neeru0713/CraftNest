@@ -10,8 +10,10 @@ router.post("/login", (req, res) => {
   // Authentication logic here...
 });
 
-router.get("/register", (req, res) => {
+router.post("/register", (req, res) => {
   // Protected route logic here...
+  console.log(req.body)
+ res.json({"data": "hello"})
 });
 
 module.exports = router;

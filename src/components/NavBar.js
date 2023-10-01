@@ -5,6 +5,7 @@ import Modal from "./Modal";
 const NavBar = ({ mylogo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
   function loginHandler() {
     setIsModalOpen(true);
   }
@@ -22,7 +23,7 @@ const NavBar = ({ mylogo }) => {
 
       {isModalOpen ? (
         <div className="overlay">
-          <Modal />
+          <Modal setIsModalOpen={setIsModalOpen} />
         </div>
       ) : null}
     </div>
