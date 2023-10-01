@@ -1,20 +1,41 @@
-.landing-page{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-     animation: changeBackground 10s infinite; 
-     transition: background-image 2s ease-in-out;
-   
+.landing-page {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: changeBackground 10s infinite;
+  transition: background-image 2s ease-in-out;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+  backdrop-filter: blur(5px); /* Apply blur effect to the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the overlay appears on top of other elements */
+}
+.auth-graintant {
+    background-image: url("./Dawn.jpg");
+     background-size: cover; /* This property makes sure the image covers the entire element */
+  background-repeat: no-repeat; /* This property prevents the image from repeating */
+  background-position: center center; /* This property centers the image horizontally and vertically */
 }
 
 @keyframes changeBackground {
-    0%, 33.33% {
-        background-image: url('bg-writer3.png'); /* First image for 1/3 of the animation duration */
-    }
-    33.34%, 66.67% {
-        background-image: url('bg-photography1.png'); /* Second image for 1/3 of the animation duration */
-    }
-    66.68%, 100% {
-        background-image: url('bg-it3.png'); /* Third image for 1/3 of the animation duration */
-    }
+  0%,
+  33.33% {
+    background-image: url("bg-writer3.png"); /* First image for 1/3 of the animation duration */
+  }
+  33.34%,
+  66.67% {
+    background-image: url("bg-photography1.png"); /* Second image for 1/3 of the animation duration */
+  }
+  66.68%,
+  100% {
+    background-image: url("bg-it3.png"); /* Third image for 1/3 of the animation duration */
+  }
 }

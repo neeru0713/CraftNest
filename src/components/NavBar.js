@@ -1,14 +1,13 @@
-import  React, {useState } from 'react'
-import Button from './Button';
-import Modal from './Modal';
+import React, { useState, useEffect } from "react";
+import Button from "./Button";
+import Modal from "./Modal";
 
 const NavBar = ({ mylogo }) => {
-const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    function loginHandler() {
-        
-     setIsModalOpen(true)
- }
+  function loginHandler() {
+    setIsModalOpen(true);
+  }
   return (
     <div className=" h-[70px] flex w-[100%] justify-between">
       <img scr={mylogo} height="40px" width="40px" />
@@ -20,9 +19,14 @@ const [isModalOpen, setIsModalOpen] = useState(false);
           <Button name="Explore" />
         </div>
       </div>
-      {isModalOpen ? <Modal /> : null}
+
+      {isModalOpen ? (
+        <div className="overlay">
+          <Modal />
+        </div>
+      ) : null}
     </div>
   );
-}
+};
 
-export default NavBar
+export default NavBar;

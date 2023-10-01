@@ -1,10 +1,7 @@
-
-import './App.css';
+import "./App.css";
 // import {io} from "socket.io-client"
 import LandingPage from "./components/LandingPage";
-function App({socket}) {
-
-  
+function App({ socket }) {
   // function clickHandler() {
   //   // let socket = io('http://localhost:8080')
   //   // console.log("button clicked", socket);
@@ -15,8 +12,7 @@ function App({socket}) {
   // }
   return (
     <div className="App">
-     
-      <LandingPage/>
+      <LandingPage />
     </div>
   );
 }

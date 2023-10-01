@@ -1,0 +1,112 @@
+import React, { useState } from "react";
+import Input from "./Input";
+import Button from "./Button";
+
+const AuthPage = ({ togglePage, whichAuthPage }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isButtonDisable, setIsButtonDisable] = useState(true);
+
+  
+
+  const validateEmail = (email) => {
+    // Regular expression for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    // Password should be at least 8 characters long
+    return password.length >= 8;
+  };
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (name === "email") {
+      setEmail(value);
+      setEmailError(validateEmail(value) ? "" : "Invalid email address");
+
+    } else {
+      setPassword(value);
+      setPasswordError(
+        validatePassword(value)
+          ? ""
+          : "Password must be at least 8 characters long"
+      );
+    }
+
+    // check if button needs to be disabled or enabled
+   setIsButtonDisable(!validateEmail(email) || !validatePassword(password));
+
+  };
+
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    alert('efef')
+
+   
+  };
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex flex-col ml-8 mt-8">
+        <h1 className="font-bold text-[30px] ">
+          {whichAuthPage === "login"
+            ? " Sign into your account"
+            : "Join our family of CraftNest"}
+        </h1>
+        <p className="font-semibold text-[15px] ">
+          {whichAuthPage === "login"
+            ? "  New to Craftnest ?"
+            : "Already a member ?"}
+
+          <span
+            className="text-white underline font-bold cursor-pointer"
+            onClick={() => {
+              if (whichAuthPage === "login") {
+                togglePage("register");
+              } else {
+                togglePage("login");
+              }
+            }}
+          >
+            {whichAuthPage === "login" ? "  Sign up here" : "Log In"}
+          </span>
+        </p>
+      </div>
+
+      <div className="flex flex-col ml-4 p-4 text-lg gap-4 font-semibold">
+        <Input
+          type="email"
+          label="Email"
+          name="email"
+          placeholder="test@gmail.com"
+          value={email}
+          onChange={handleInputChange}
+        />
+        {emailError && <span className="text-red-500">{emailError}</span>}
+        <Input
+          type="password"
+          label="Password"
+          name="password"
+          value={password}
+          onChange={handleInputChange}
+          className="mt-2"
+        />
+        {passwordError && <span className="text-red-500">{passwordError}</span>}
+        <Button
+          name={whichAuthPage === "login" ? "Login" : "Register"}
+          type="form-btn"
+          handleSubmit={handleSubmit}
+          isButtonDisable={isButtonDisable}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default AuthPage;
