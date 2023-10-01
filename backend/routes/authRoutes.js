@@ -1,19 +1,16 @@
 // authRoutes.js
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
+const authController = require("../controllers/auth.controller");
 const router = express.Router();
 
 const SECRET_KEY = "your_secret_key"; // Change this to a secure random string
 
-router.post("/login", (req, res) => {
-  // Authentication logic here...
-});
+router.post("/login", authController.login);
 
-router.post("/register", (req, res) => {
-  // Protected route logic here...
-  console.log(req.body)
- res.json({"data": "hello"})
-});
+router.post(
+  "/register",
+  authController.register
+);
 
 module.exports = router;

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-const socket = require("socket.io");
+// const socket = require("socket.io");
 const authRoutes = require("./routes/authRoutes");
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 
 const mongoURI = "mongodb://localhost:27017/craftnest";
 mongoose.connect(mongoURI, {
@@ -30,11 +30,12 @@ app.use("/auth", authRoutes);
 const server = app.listen(8080, () => {
   console.log(`server started on 8080`);
 });
-const io = socket(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+
+// const io = socket(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
 
 
 // const server = createServer(app);
@@ -42,17 +43,17 @@ const io = socket(server, {
 
 
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-  console.log("............");
-  socket.on("custom", (msg, id) => {
-    socket.to("test").emit("send", msg);
-    console.log(msg, socket.id);
-  });
-  socket.on("join-room", (room) => {
-    socket.join(room);
-  });
-});
+// io.on("connection", (socket) => {
+//   console.log("a user connected", socket.id);
+//   console.log("............");
+//   socket.on("custom", (msg, id) => {
+//     socket.to("test").emit("send", msg);
+//     console.log(msg, socket.id);
+//   });
+//   socket.on("join-room", (room) => {
+//     socket.join(room);
+//   });
+// });
 
 // server.listen(8080, () => {
 //   console.log("server running at http://localhost:8080");

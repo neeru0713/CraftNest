@@ -1,6 +1,9 @@
 import "./App.css";
 // import {io} from "socket.io-client"
 import LandingPage from "./components/LandingPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Contribute } from "./components/Contribute";
+
 function App({ socket }) {
   // function clickHandler() {
   //   // let socket = io('http://localhost:8080')
@@ -11,9 +14,14 @@ function App({ socket }) {
   //   // socket.emit("message", "ousbdivsbv")
   // }
   return (
-    <div className="App">
-      <LandingPage />
-    </div>
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<LandingPage />}/>
+          
+          <Route path="contribute" element={<Contribute />} />
+       
+      </Routes>
+    </BrowserRouter>
   );
 }
 

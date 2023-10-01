@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
+import {Notification} from "./Notification"
 
-const AuthPage = ({ togglePage, whichAuthPage }) => {
+const AuthPage = ({ togglePage, whichAuthPage, setIsModalOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-
-  
+  const [showNotification, setShowNotification] = useState(false)
+  const [notifMsg, setNotifMsg] = useState("")
 
   const validateEmail = (email) => {
     // Regular expression for basic email validation
@@ -29,7 +30,6 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
     if (name === "email") {
       setEmail(value);
       setEmailError(validateEmail(value) ? "" : "Invalid email address");
-
     } else {
       setPassword(value);
       setPasswordError(
@@ -40,19 +40,25 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
     }
 
     // check if button needs to be disabled or enabled
-  //  setIsButtonDisable(!validateEmail(email) || !validatePassword(password));
-
+    //  setIsButtonDisable(!validateEmail(email) || !validatePassword(password));
   };
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    debugger
+    debugger;
     const postData = {
       email: email,
       password: password,
     };
 
-    fetch("http://localhost:8080/auth/register", {
+    let url = "";
+    if (whichAuthPage === "register") {
+      url = "http://localhost:8080/auth/register";
+    } else {
+      url = "http://localhost:8080/auth/login";
+    }
+
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,13 +75,19 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
       .then((data) => {
         // Handle the successful response data
         console.log("Data:", data);
+        let name = "auth";
+        let value = data.tokens.access.token;
+        let expiry = data.tokens.access.expires;
+        // set the cookie with token returned from api
+        document.cookie = `${name}=${value};expires=${expiry};path=/`;
+        setShowNotification(true)
+        setNotifMsg(data.message)
+        setIsModalOpen(false)
       })
       .catch((error) => {
         // Handle errors
         console.error("Error:", error);
       });
-
-   
   };
 
   return (
@@ -132,6 +144,8 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
           isButtonDisable={isButtonDisable}
         />
       </div>
+
+      {/* {showNotification ? (<Notification msg={ notifMsg } />) : null}  */}
     </div>
   );
 };

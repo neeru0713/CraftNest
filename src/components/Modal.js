@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import photo from "../photography.jpg"
 import AuthPage from "./AuthPage";
 const Modal = ({ setIsModalOpen }) => {
-  const [whichAuthPage, setWhichAuthPage] = useState("login");
+const [whichAuthPage, setWhichAuthPage] = useState("login");
  const modalRef = useRef(null);
   useEffect(() => {
     const handleEscapeKey = (event) => {
@@ -19,7 +19,7 @@ const Modal = ({ setIsModalOpen }) => {
 
     document.addEventListener("keydown", handleEscapeKey);
     document.addEventListener("mousedown", handleOutsideClick);
-
+    // cleanup function
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
       document.removeEventListener("mousedown", handleOutsideClick);
@@ -60,7 +60,11 @@ const Modal = ({ setIsModalOpen }) => {
             : "rounded-tl-lg rounded-bl-lg"
         }`}
       >
-        <AuthPage togglePage={setWhichAuthPage} whichAuthPage={whichAuthPage} />
+        <AuthPage
+          togglePage={setWhichAuthPage}
+          whichAuthPage={whichAuthPage}
+          setIsModalOpen={setIsModalOpen}
+        />
       </div>
     </div>
   );

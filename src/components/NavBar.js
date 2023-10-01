@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
-
-const NavBar = ({ mylogo }) => {
+import mylogo from "../logo_transparent.png";
+const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -11,13 +11,13 @@ const NavBar = ({ mylogo }) => {
   }
   return (
     <div className=" h-[70px] flex w-[100%] justify-between">
-      <img scr={mylogo} height="40px" width="40px" />
+      <img src={mylogo} height="90em" width="100em" />
       <div className=" w-[10%] h-[3rem] flex justify-between mr-[1rem] pt-[1rem]">
-        <div onClick={loginHandler}>
-          <Button name="Login" />
-        </div>
         <div>
           <Button name="Explore" />
+        </div>
+        <div onClick={loginHandler}>
+          <Button name="Login" />
         </div>
       </div>
 
