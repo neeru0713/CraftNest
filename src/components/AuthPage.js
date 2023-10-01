@@ -3,14 +3,19 @@ import Input from "./Input";
 import Button from "./Button";
 import {Notification} from "./Notification"
 
-const AuthPage = ({ togglePage, whichAuthPage, setIsModalOpen }) => {
+const AuthPage = ({
+  togglePage,
+  whichAuthPage,
+  setIsModalOpen,
+  setShowLoginBtn,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [showNotification, setShowNotification] = useState(false)
-  const [notifMsg, setNotifMsg] = useState("")
+  const [showNotification, setShowNotification] = useState(false);
+  const [notifMsg, setNotifMsg] = useState("");
 
   const validateEmail = (email) => {
     // Regular expression for basic email validation
@@ -80,9 +85,11 @@ const AuthPage = ({ togglePage, whichAuthPage, setIsModalOpen }) => {
         let expiry = data.tokens.access.expires;
         // set the cookie with token returned from api
         document.cookie = `${name}=${value};expires=${expiry};path=/`;
-        setShowNotification(true)
-        setNotifMsg(data.message)
-        setIsModalOpen(false)
+        localStorage.setItem("craftnest_user", JSON.stringify(data.user));
+        setShowNotification(true);
+        setNotifMsg(data.message);
+        setIsModalOpen(false);
+        setShowLoginBtn(false)
       })
       .catch((error) => {
         // Handle errors

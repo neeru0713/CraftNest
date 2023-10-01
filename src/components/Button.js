@@ -1,6 +1,17 @@
 import React from "react";
 
-const Button = ({ name, type, isButtonDisable, handleSubmit }) => {
+const Button = ({ name, type, isButtonDisable, handleSubmit, size = "large" ,bgColor}) => {
+  function getButtonSize() {
+    if (size === "small") {
+      return "text-xs";
+    }
+    if (size === "large") {
+      return "text-lg";
+    }
+    if (size === "medium") {
+      return "text-md";
+    }
+  }
   return (
     <>
       {type === "form-btn" ? (
@@ -13,7 +24,7 @@ const Button = ({ name, type, isButtonDisable, handleSubmit }) => {
         </button>
       ) : (
         <button
-          className="text-white font-bold rounded border border-2 p-2 bg-cyan-800 hover:bg-transparent"
+          className={`text-white font-bold rounded border border-1 p-2 ${bgColor} hover:bg-transparent ${getButtonSize()}`}
           disabled={isButtonDisable}
           onClick={handleSubmit}
         >

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import photo from "../photography.jpg"
 import AuthPage from "./AuthPage";
-const Modal = ({ setIsModalOpen }) => {
-const [whichAuthPage, setWhichAuthPage] = useState("login");
- const modalRef = useRef(null);
+const Modal = ({ setIsModalOpen, setShowLoginBtn }) => {
+  const [whichAuthPage, setWhichAuthPage] = useState("login");
+  const modalRef = useRef(null);
   useEffect(() => {
     const handleEscapeKey = (event) => {
       if (event.keyCode === 27) {
@@ -64,6 +64,7 @@ const [whichAuthPage, setWhichAuthPage] = useState("login");
           togglePage={setWhichAuthPage}
           whichAuthPage={whichAuthPage}
           setIsModalOpen={setIsModalOpen}
+          setShowLoginBtn={setShowLoginBtn}
         />
       </div>
     </div>

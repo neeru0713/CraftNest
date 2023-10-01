@@ -1,7 +1,11 @@
 import React from 'react'
-
+import NavBar from './NavBar'
+import { ProjectInput } from './ProjectInput'
 export const Contribute = () => {
   return (
-    <div>Contribute</div>
+      <div>
+          <NavBar />
+          <ProjectInput/>
+    </div>
   )
 }

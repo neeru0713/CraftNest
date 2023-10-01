@@ -3,8 +3,17 @@ import "./App.css";
 import LandingPage from "./components/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Contribute } from "./components/Contribute";
+import React, { useState, useEffect } from "react";
 
 function App({ socket }) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const myuser = JSON.parse(localStorage.getItem("craftnest_user"));
+    console.log(myuser);
+    if (myuser) {
+      setUser(myuser)
+    }
+  }, [])
   // function clickHandler() {
   //   // let socket = io('http://localhost:8080')
   //   // console.log("button clicked", socket);
@@ -16,10 +25,9 @@ function App({ socket }) {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<LandingPage />}/>
-          
-          <Route path="contribute" element={<Contribute />} />
-       
+        <Route path="/" element={<LandingPage user={user} />} />
+
+        <Route path="contribute" element={<Contribute user={user} />} />
       </Routes>
     </BrowserRouter>
   );
