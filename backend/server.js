@@ -6,7 +6,7 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+console.log(process.env.NODE_ENV);
 const mongoURI = "mongodb://localhost:27017/craftnest";
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
