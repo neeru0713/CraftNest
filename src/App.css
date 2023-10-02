@@ -19,7 +19,12 @@
   z-index: 999; /* Ensure the overlay appears on top of other elements */
 }
 .auth-graintant {
-    background-image: url("./Dawn.jpg");
+    /* background-image: url("./Aubergine.jpg"); */
+    
+     /* background-color: #986904; */
+background: #243B55;  /* fallback for old browsers */
+
+
      background-size: cover; /* This property makes sure the image covers the entire element */
   background-repeat: no-repeat; /* This property prevents the image from repeating */
   background-position: center center; /* This property centers the image horizontally and vertically */

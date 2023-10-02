@@ -31,7 +31,7 @@ const Modal = ({ setIsModalOpen, setShowLoginBtn }) => {
       ref={modalRef}
       className={`flex ${
         whichAuthPage === "login" ? "flex-row " : "flex-row-reverse"
-      } fixed h-[75%] w-[50%] top-16 left-[27%] justify-center items-center border border-none rounded-lg`}
+      } fixed h-[75%] w-[50%] top-16 text-[#243B55] left-[27%] justify-center items-center border border-none rounded-lg`}
     >
       <div
         className={`w-[50%] h-[100%] bg-[#f6f8f7] flex flex-col justify-between ${
@@ -54,7 +54,7 @@ const Modal = ({ setIsModalOpen, setShowLoginBtn }) => {
       </div>
 
       <div
-        className={`w-[50%] h-[100%] text-black auth-graintant  ${
+        className={`w-[50%] h-[100%] text-white auth-graintant  ${
           whichAuthPage === "login"
             ? "rounded-tr-lg rounded-br-lg"
             : "rounded-tl-lg rounded-bl-lg"

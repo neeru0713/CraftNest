@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ name, type, isButtonDisable, handleSubmit, size = "large" ,bgColor}) => {
+const Button = ({ name, type, isButtonDisable, handleSubmit, size = "medium" ,bgColor}) => {
   function getButtonSize() {
     if (size === "small") {
       return "text-xs";
@@ -16,7 +16,7 @@ const Button = ({ name, type, isButtonDisable, handleSubmit, size = "large" ,bgC
     <>
       {type === "form-btn" ? (
         <button
-          className="text-[#28264b] font-bold rounded border border-[3px] p-2 bg-white hover:bg-[#242243] hover:text-white hover:border-[#28264b]"
+          className="text-[#28264b] font-bold rounded border border-[3px] p-2 bg-white hover:bg-transparent hover:text-white hover:border-white"
           disabled={isButtonDisable}
           onClick={handleSubmit}
         >
