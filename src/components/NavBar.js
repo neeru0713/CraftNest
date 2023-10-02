@@ -12,7 +12,6 @@ const NavBar = ({user}) => {
   }
 
   function getShowLoginValue() {
-    console.log("..................." , user?.email)
     if (user?.email) {
       return false
     } else {

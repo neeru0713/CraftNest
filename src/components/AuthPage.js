@@ -50,7 +50,7 @@ const AuthPage = ({
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-    debugger;
+   
     const postData = {
       email: email,
       password: password,

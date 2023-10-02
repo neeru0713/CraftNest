@@ -1,45 +1,77 @@
 import React, { useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai"
 import { BsCardImage } from "react-icons/bs";
+import { BsTrash3Fill } from "react-icons/bs";
 
 export const ProjectInput = () => {
     const [fields, setFields] = useState([]);
-    const [inputValue, setInputValue] = useState([])
-     const [file, setFile] = useState([]);
     const [isDarkMode, setIsDarkMode] = useState(true)
-     const [previewUrl, setPreviewUrl] = useState(null);
     
     const addTextElement = () => {
         let obj = {
-            id: fields.length + 1,
-            type: "input",
-            value: ""
-        }
+          
+          type: "text",
+          value: "",
+        };
         setFields([...fields, obj])
-        
     }
 
-     const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+     const addImageElement = () => {
+         let obj = {
+          
+           type: "image",
+             previewImageUrl: null,
+           file: null
+         };
+       setFields([...fields, obj]);
+     };
 
-    // Use FileReader to generate a preview URL for the selected file
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewUrl(reader.result);
-    };
-    reader.readAsDataURL(selectedFile);
-  };
+    const handleFileChange = (event) => {
+        let index = event.target.getAttribute("data-id");
+        
+        const selectedFile = event.target.files[0];
+        // setUploadedfile([
+        //   ...uploadedfile,
+        //   { id: idOfImage, file: selectedFile , previewUrl},
+        // ]);
 
+        // Use FileReader to generate a preview URL for the selected file
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            let modifiedArray = [...fields];
 
-    const addImageElement = () => {
-      let obj = {
-        id: fields.length + 1,
-        type: "image",
-        value: "",
-      };
-      setFields([...fields, obj]);
-    };
+            modifiedArray[index].previewImageUrl = reader.result;
+            setFields(modifiedArray);
+            
+        
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+
+    function textChangeHandler(e) {
+        let val = e.target.value;
+        debugger
+        let index = e.target.getAttribute("data-id");
+        let modifiedArray = [...fields]
+        modifiedArray[index].value = val;
+        setFields(modifiedArray);
+      
+    }
+
+    function removeElement(e) {
+       const elementWithDataId = e.target.closest("[data-id]");
+
+       // If found, get the data-id attribute value
+       if (elementWithDataId) {
+         const index = elementWithDataId.getAttribute("data-id");
+         const updatedArray = fields.filter(
+           (obj,idx) => idx !== parseInt(index, 10)
+         );
+         setFields(updatedArray);
+       }
+    }
+    
+    
     return (
       <div
         className={`${
@@ -54,15 +86,23 @@ export const ProjectInput = () => {
         </div>
         <div className="flex flex-col gap-2">
           {fields.map((ele, index) => (
-            <div>
-              {ele.type === "input" ? (
-                <textarea type="input" data-id={ele.id} className="w-[90%] p-2 border border-x-none outline-none decoration-solid bg-transparent underline"/>
+              <div className="flex " key={index}>
+              {ele.type === "text" ? (
+                      <textarea
+                          type="text"
+                          data-id={index}
+                          onChange={textChangeHandler}
+                          value={ele.value}
+                          className="w-[90%] p-2 border border-x-none outline-none decoration-solid bg-transparent underline" />
                   ) : (
-                          <div>
-                          <input type="file" data-id={ele.id} onChange={handleFileChange}  />
-                              {previewUrl && <img src={previewUrl} alt="Preview" style={{ width: "100px", height: "100px" }} />}
-                              </div>
-              )}
+                    <div>
+                              {!ele.previewImageUrl && <input type="file" data-id={index} onChange={handleFileChange} />}
+                        {ele.previewImageUrl && <img src={ele.previewImageUrl} alt="Preview" style={{ width: "100px", height: "100px" }} />}
+                    </div>
+                  )}
+                  <div onClick={removeElement} data-id={index}>
+                      <BsTrash3Fill/>
+                  </div>
             </div>
           ))}
         </div>
