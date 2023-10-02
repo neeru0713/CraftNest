@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
-import {Notification} from "./Notification"
+import { Notification } from "./Notification"
+import { API_URL } from "../config/config";
 
 const AuthPage = ({
   togglePage,
@@ -58,9 +59,9 @@ const AuthPage = ({
 
     let url = "";
     if (whichAuthPage === "register") {
-      url = "http://localhost:8080/auth/register";
+      url = `${API_URL}/auth/register`;
     } else {
-      url = "http://localhost:8080/auth/login";
+      url = `${API_URL}/auth/login`;
     }
 
     fetch(url, {

@@ -6,8 +6,14 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 app.use(cors());
 app.use(express.json());
+let mongoURI;
+if (process.env.NODE_ENV === "production") {
+  mongoURI =
+  "mongodb+srv://neerurani1307:%40Neeru1307@neerucluster.z4krrc9.mongodb.net/craftnest?retryWrites=true&w=majority";
+} else {
+  mongoURI = "mongodb://localhost:27017/craftnest";
+}
 
-const mongoURI = "mongodb://localhost:27017/craftnest";
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
