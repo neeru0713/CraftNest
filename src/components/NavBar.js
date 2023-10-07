@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
 import mylogo from "../logo_transparent1.png";
-import {Link} from "react-router-dom"
-const NavBar = ({user}) => {
+import { Link } from "react-router-dom";
+import { UserContext, ModalContext } from "../App";
+// import useUser from "../customHooks/useUser"
+
+const NavBar = ({ handleSubmit }) => {
+  // const { user, setUser } = useUser();
+  const { user, setUser } = useContext(UserContext);
+  const { showModal, setShowModal } = useContext(ModalContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showLoginBtn, setShowLoginBtn] = useState(getShowLoginValue());
 
+  useEffect(() => {
+    console.log("use effevt is called", user);
+  }, [user]);
+
   function loginHandler() {
-    setIsModalOpen(true);
+    // setIsModalOpen(true);
+    setShowModal(true)
   }
 
   function getShowLoginValue() {
-    if (user?.email) {
-      return false
+    console.log("user in navbar : ", user);
+    if (user) {
+      return false;
     } else {
       return true;
     }
@@ -33,23 +45,25 @@ const NavBar = ({user}) => {
         <div>
           <Button name="Explore" size="small" bgColor="bg-none" />
         </div>
-        {showLoginBtn ? (
+        {!user ? (
           <div onClick={loginHandler}>
             <Button name="Log In" size="small" bgColor="bg-none" />
           </div>
         ) : (
-          <div>0</div>
+          <div className="border rounded-full bg-slate-400 h-[35px] w-[35px] text-black font-semibold text-center p-1">
+            NR
+          </div>
         )}
       </div>
 
-      {isModalOpen ? (
-        <div className="overlay">
+      
+        
           <Modal
             setIsModalOpen={setIsModalOpen}
             setShowLoginBtn={setShowLoginBtn}
           />
-        </div>
-      ) : null}
+        
+      
     </div>
   );
 };

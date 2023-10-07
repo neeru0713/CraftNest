@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext  } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import { Notification } from "./Notification"
 import { API_URL } from "../config/config";
+// import useUser from "../customHooks/useUser"
+import { UserContext, ModalContext } from "../App";
 
 const AuthPage = ({
   togglePage,
@@ -17,8 +19,12 @@ const AuthPage = ({
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notifMsg, setNotifMsg] = useState("");
+  // const { user, setUser } = useUser();
+  const { user, setUser } = useContext(UserContext);
+  const { showModal, setShowModal } = useContext(ModalContext);
 
   const validateEmail = (email) => {
+     
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -81,14 +87,16 @@ const AuthPage = ({
       .then((data) => {
         // Handle the successful response data
         console.log("Data:", data);
-        let name = "auth";
-        let value = data.tokens.access.token;
-        let expiry = data.tokens.access.expires;
-        // set the cookie with token returned from api
-        document.cookie = `${name}=${value};expires=${expiry};path=/`;
-        localStorage.setItem("craftnest_user", JSON.stringify(data.user));
+         let name = "auth";
+         let value = data?.tokens.access.token;
+         let expiry = data?.tokens.access.expires;
+         // set the cookie with token returned from api
+         document.cookie = `${name}=${value};expires=${expiry};path=/`;
+         localStorage.setItem("craftnest_user", JSON.stringify(data?.user));
+        setUser(data.user)
         setShowNotification(true);
         setNotifMsg(data.message);
+        setShowModal(false)
         setIsModalOpen(false);
         setShowLoginBtn(false)
       })
@@ -126,7 +134,7 @@ const AuthPage = ({
         </p>
       </div>
 
-      <div className="flex flex-col ml-4 p-4 text-lg gap-4 font-semibold">
+      <div className="flex flex-col ml-4 p-4 text-lg gap-4 font-semibold text-black">
         <Input
           type="email"
           label="Email"

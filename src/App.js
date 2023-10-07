@@ -3,10 +3,15 @@ import "./App.css";
 import LandingPage from "./components/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Contribute } from "./components/Contribute";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
-function App({ socket }) {
+export const UserContext = createContext();
+export const ModalContext = createContext();
+
+function App() {
   const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("craftnest_user"));
     console.log(myuser);
@@ -24,11 +29,14 @@ function App({ socket }) {
   // }
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage user={user} />} />
-
-        <Route path="contribute" element={<Contribute user={user} />} />
-      </Routes>
+      <UserContext.Provider value={{ user, setUser }}>
+        <ModalContext.Provider value={{ showModal, setShowModal }}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="contribute" element={<Contribute />} />
+          </Routes>
+        </ModalContext.Provider>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

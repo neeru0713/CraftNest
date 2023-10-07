@@ -29,30 +29,28 @@ export const ProjectInput = () => {
      };
 
     const handleFileChange = (event) => {
-        let index = event.target.getAttribute("data-id");
-        
-        const selectedFile = event.target.files[0];
-        // setUploadedfile([
-        //   ...uploadedfile,
-        //   { id: idOfImage, file: selectedFile , previewUrl},
-        // ]);
+      const index = event.target.getAttribute("data-id");
+      const selectedFile = event.target.files[0];
 
-        // Use FileReader to generate a preview URL for the selected file
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            let modifiedArray = [...fields];
+      // Create a Blob object from the selected file
+      const videoBlob = new Blob([selectedFile], { type: selectedFile.type });
 
-            modifiedArray[index].previewImageUrl = reader.result;
-            setFields(modifiedArray);
-            
-        
-            };
-            reader.readAsDataURL(selectedFile);
-        }
+      // Use FileReader to generate a preview URL for the selected video file
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        let modifiedArray = [...fields];
+
+        modifiedArray[index].previewVideoUrl = reader.result;
+        setFields(modifiedArray);
+      };
+
+      // Read the Blob object as data URL
+      reader.readAsDataURL(videoBlob);
+    };
+
 
     function textChangeHandler(e) {
         let val = e.target.value;
-        debugger
         let index = e.target.getAttribute("data-id");
         let modifiedArray = [...fields]
         modifiedArray[index].value = val;
@@ -88,7 +86,7 @@ export const ProjectInput = () => {
           Share your talent
         </h1>
         <div onClick={addTextElement} className=" fixed right-6 top-16">
-          <PiTextTBold className="h-[30px] w-[30px]" />
+          <PiTextTBold className="h-[30px] w-[30px]"/>
         </div>
         <div onClick={addImageElement} className=" fixed right-6 top-[100px]">
           <BsCardImage className="h-[30px] w-[30px]" />
