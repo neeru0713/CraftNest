@@ -9,8 +9,6 @@ import { UserContext, ModalContext } from "../App";
 const AuthPage = ({
   togglePage,
   whichAuthPage,
-  setIsModalOpen,
-  setShowLoginBtn,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,8 +95,7 @@ const AuthPage = ({
         setShowNotification(true);
         setNotifMsg(data.message);
         setShowModal(false)
-        setIsModalOpen(false);
-        setShowLoginBtn(false)
+       
       })
       .catch((error) => {
         // Handle errors

@@ -5,7 +5,7 @@ import { ModalContext } from "../App";
 
 
 
-const Modal = ({ setIsModalOpen, setShowLoginBtn }) => {
+const Modal = () => {
 const { showModal, setShowModal } = useContext(ModalContext);
 
   const [whichAuthPage, setWhichAuthPage] = useState("login");
@@ -72,8 +72,7 @@ const { showModal, setShowModal } = useContext(ModalContext);
               <AuthPage
                 togglePage={setWhichAuthPage}
                 whichAuthPage={whichAuthPage}
-                setIsModalOpen={setIsModalOpen}
-                setShowLoginBtn={setShowLoginBtn}
+              
               />
             </div>
           </div>

@@ -1,6 +1,8 @@
 import React from "react";
 
-const Button = ({ name, type, isButtonDisable, handleSubmit, size = "medium" ,bgColor}) => {
+import { MdSaveAlt } from "react-icons/md";
+
+const Button = ({className, name, type=null, isButtonDisable=false, handleHover = () => {} , handleSubmit, size = "medium" ,bgColor, hoverBg="bg-transparent", hoverText="black"}) => {
   function getButtonSize() {
     if (size === "small") {
       return "text-xs";
@@ -24,11 +26,17 @@ const Button = ({ name, type, isButtonDisable, handleSubmit, size = "medium" ,bg
         </button>
       ) : (
         <button
-          className={`text-white font-bold rounded border border-1 p-2 ${bgColor} hover:bg-transparent ${getButtonSize()}`}
+   
+          className={`${className} text-white font-bold rounded border border-1 p-2 ${bgColor} hover:${hoverBg} hover:text-${hoverText} ${getButtonSize()}`}
           disabled={isButtonDisable}
           onClick={handleSubmit}
+          onMouseEnter={(event) => handleHover(event, true)}
+          onMouseLeave={(event) => handleHover(event, false)}
         >
           {name}
+          {name === "Save" && (
+            <MdSaveAlt className="inline save-icon text-xl" />
+          )}
         </button>
       )}
     </>

@@ -5,13 +5,12 @@ import mylogo from "../logo_transparent1.png";
 import { Link } from "react-router-dom";
 import { UserContext, ModalContext } from "../App";
 // import useUser from "../customHooks/useUser"
+import {Popover} from "./Popover.js"
 
 const NavBar = ({ handleSubmit }) => {
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const { showModal, setShowModal } = useContext(ModalContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showLoginBtn, setShowLoginBtn] = useState(getShowLoginValue());
 
   useEffect(() => {
     console.log("use effevt is called", user);
@@ -41,10 +40,20 @@ const NavBar = ({ handleSubmit }) => {
         <div className="font-semibold text-lg">CraftNest</div>
       </div>
 
-      <div className=" w-[8%] h-[40px] flex justify-between mr-[1rem] pt-2 ">
-        <div>
-          <Button name="Explore" size="small" bgColor="bg-none" />
+      <div className=" w-[20%] h-[40px] flex justify-between mr-[1rem] pt-2 ">
+        {/* <Button name="Explore" size="small" bgColor="bg-none" /> */}
+        <div className="w-[90%]">
+          <Popover/>
         </div>
+
+        {/* <select className="w-[70%] border border-white bg-slate-900 text-white font-semibold h-[35px] rounded-md">
+          <option>Select</option>
+          <option className="p-10" value="Blogs">Blogs</option>
+          <option value="Photography">Photography</option>
+          <option value="Webdesign">Webdesign</option>
+          <option value="Graphicdesign">Graphicdesign</option>
+        </select> */}
+
         {!user ? (
           <div onClick={loginHandler}>
             <Button name="Log In" size="small" bgColor="bg-none" />
@@ -56,14 +65,7 @@ const NavBar = ({ handleSubmit }) => {
         )}
       </div>
 
-      
-        
-          <Modal
-            setIsModalOpen={setIsModalOpen}
-            setShowLoginBtn={setShowLoginBtn}
-          />
-        
-      
+      <Modal />
     </div>
   );
 };
