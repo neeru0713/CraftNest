@@ -2,7 +2,11 @@ import React from "react";
 
 import { MdSaveAlt } from "react-icons/md";
 
-const Button = ({className, name, type=null, isButtonDisable=false, handleHover = () => {} , handleSubmit, size = "medium" ,bgColor, hoverBg="bg-transparent", hoverText="black"}) => {
+const Button = ({ className, name, type = null,
+  isButtonDisable = false, handleHover = () => { },
+  handleSubmit, size = "medium", bgColor,
+  hoverBg = "bg-transparent", hoverText = "black",
+  contentColor = "white" }) => {
   function getButtonSize() {
     if (size === "small") {
       return "text-xs";
@@ -26,8 +30,7 @@ const Button = ({className, name, type=null, isButtonDisable=false, handleHover 
         </button>
       ) : (
         <button
-   
-          className={`${className} text-white font-bold rounded border border-1 p-2 ${bgColor} hover:${hoverBg} hover:text-${hoverText} ${getButtonSize()}`}
+          className={`${className} text-${contentColor} font-bold rounded border border-1 p-2 ${bgColor} hover:${hoverBg} hover:text-${hoverText} ${getButtonSize()}`}
           disabled={isButtonDisable}
           onClick={handleSubmit}
           onMouseEnter={(event) => handleHover(event, true)}

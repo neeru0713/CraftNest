@@ -1,11 +1,18 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
+var bodyParser = require("body-parser");
+
 // const socket = require("socket.io");
 const authRoutes = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json()); 
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+
 let mongoURI;
 if (process.env.NODE_ENV === "production") {
   mongoURI =
@@ -31,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-
+app.use("/project", projectRoutes);
 
 const server = app.listen(8080, () => {
   console.log(`server started on 8080`);

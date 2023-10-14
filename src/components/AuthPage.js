@@ -84,7 +84,6 @@ const AuthPage = ({
       })
       .then((data) => {
         // Handle the successful response data
-        console.log("Data:", data);
          let name = "auth";
          let value = data?.tokens.access.token;
          let expiry = data?.tokens.access.expires;

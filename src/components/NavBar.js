@@ -11,27 +11,16 @@ const NavBar = ({ handleSubmit }) => {
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const { showModal, setShowModal } = useContext(ModalContext);
-
-  useEffect(() => {
-    console.log("use effevt is called", user);
-  }, [user]);
-
+  
   function loginHandler() {
     // setIsModalOpen(true);
     setShowModal(true)
   }
 
-  function getShowLoginValue() {
-    console.log("user in navbar : ", user);
-    if (user) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+
 
   return (
-    <div className=" h-[50px] flex w-[100%] justify-between bg-slate-900">
+    <div className=" h-[50px] flex w-[100%] justify-between bg-teal-950">
       <div className="flex text-white items-center">
         <Link to="/">
           <img src={mylogo} className="h-[76px]  mt-3" />
@@ -40,11 +29,29 @@ const NavBar = ({ handleSubmit }) => {
         <div className="font-semibold text-lg">CraftNest</div>
       </div>
 
-      <div className=" w-[20%] h-[40px] flex justify-between mr-[1rem] pt-2 ">
+      <div
+        className={`${
+          !user ? "w-[13%]" : "w-[19%]"
+        }  h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
+      >
         {/* <Button name="Explore" size="small" bgColor="bg-none" /> */}
-        <div className="w-[90%]">
-          <Popover/>
+        <div className="">
+          <Popover />
         </div>
+
+        {user ? (
+          <Button
+            handleSubmit={() => {
+              localStorage.removeItem("craftnest_user");
+              setUser(null)
+            }}
+            name="Log out"
+            hoverBg="bg-teal-500"
+            size="small"
+            bgColor="bg-none"
+            className="mb-2 mr-3 hover:bg-teal-600"
+          />
+        ) : null}
 
         {/* <select className="w-[70%] border border-white bg-slate-900 text-white font-semibold h-[35px] rounded-md">
           <option>Select</option>
@@ -56,10 +63,15 @@ const NavBar = ({ handleSubmit }) => {
 
         {!user ? (
           <div onClick={loginHandler}>
-            <Button name="Log In" size="small" bgColor="bg-none" />
+            <Button
+              name="Log In"
+              size="small"
+              bgColor="bg-none"
+              className="mb-2 hover:bg-teal-600"
+            />
           </div>
         ) : (
-          <div className="border rounded-full bg-slate-400 h-[35px] w-[35px] text-black font-semibold text-center p-1">
+          <div className="border rounded-full gradient-username h-[38px] w-[40px] text-white font-semibold text-center mb-[10px] pt-[8px] text-sm">
             NR
           </div>
         )}

@@ -62,11 +62,15 @@ label.cursor-pointer {
 
 /* Change label background color on hover */
 label.cursor-pointer:hover {
-  background-color: #5fcab8;
+  background-color: #a0144f;
 }
 
 option {
 padding:10px;
+}
+
+#popover #explore-popover{
+  z-index: 999;
 }
 
 #explore-popover .popover-item{
@@ -74,13 +78,20 @@ padding:10px;
 }
 
 .save-btn:hover{
-  background: transparent;
-  color: #a0144f;
-  border: 2px solid #a0144f;
+  background: #ce276d;
+  /* color: #a0144f; */
+  /* border: 2px solid #a0144f; */
 }
 
 .save-icon:hover{
   fill: #a0144f;
 }
 
+.gradient-username{
+  background: #c31432;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
 
