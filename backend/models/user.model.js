@@ -32,7 +32,11 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-
+    role: {
+      type: String,
+      enum: ["admin", "user", "creator"],
+      default: "user",
+    },
   },
   // Create createdAt and updatedAt fields automatically
   {

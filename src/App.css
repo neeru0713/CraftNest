@@ -95,3 +95,76 @@ background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Fir
 
 }
 
+
+.zindex-custom{
+  z-index: 999;
+}
+
+th{
+  @apply text-center;
+}
+
+th{
+  font-size: large;
+}
+
+td{
+  @apply text-center;
+}
+
+td{
+  font-size: medium;
+}
+
+.deleteIconRed{
+  fill :red;
+ height: 20px;
+ width: 20px; 
+}
+
+#editBtn{
+  fill: white(135, 238, 247);
+  height: 20px;
+ width: 20px; 
+}
+
+th{
+  @apply text-teal-700
+}
+
+.blur-background {
+  width: 100vw;
+  height: 100vh;
+ background: #E6DADA;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #274046, #E6DADA);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #274046, #E6DADA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-size: cover;
+  backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+  color: white; /* Text color on the blurred background */
+}
+
+.card-child{
+  transition: all 0.8s;
+}
+
+.card-parent:hover .card-child{
+  transform: scale(1.2);  
+}
+
+.card-parent:hover .card-overlay{
+  @apply opacity-70;
+  z-index: 999;
+}
+
+
+
+
+
+
+
+
+
+
+
+

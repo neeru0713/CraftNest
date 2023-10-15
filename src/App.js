@@ -3,6 +3,9 @@ import "./App.css";
 import LandingPage from "./components/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Contribute } from "./components/Contribute";
+import { AdminView } from "./components/AdminView";
+import { ProjectDetail } from "./components/ProjectDetail";
+
 import React, { useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext();
@@ -14,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("craftnest_user"));
-    console.log(myuser);
+    
     if (myuser) {
       setUser(myuser)
     }
@@ -34,6 +37,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="contribute" element={<Contribute />} />
+            <Route path="/projects/:category" element={<ProjectDetail />} />
+            <Route path="/admin/manage" element={<AdminView />} />
           </Routes>
         </ModalContext.Provider>
       </UserContext.Provider>

@@ -33,6 +33,8 @@ var upload = multer({
 });
 
 
-
+router.get("/", projectController.getAllProjects);
 router.post("/", upload.array("file", 10), projectController.saveProject);
+router.get("/:domain", projectController.getProjects);
+router.delete("/:title", projectController.deleteProject);
 module.exports = router;

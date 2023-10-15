@@ -1,10 +1,10 @@
 import React from "react";
-
+import { FaPencil } from "react-icons/fa6";
 import { MdSaveAlt } from "react-icons/md";
 
-const Button = ({ className, name, type = null,
+const Button = ({ className = "", name, type = null,
   isButtonDisable = false, handleHover = () => { },
-  handleSubmit, size = "medium", bgColor,
+  handleSubmit = () => {}, size = "medium", bgColor="bg-transparent",
   hoverBg = "bg-transparent", hoverText = "black",
   contentColor = "white" }) => {
   function getButtonSize() {
@@ -40,6 +40,7 @@ const Button = ({ className, name, type = null,
           {name === "Save" && (
             <MdSaveAlt className="inline save-icon text-xl" />
           )}
+          {name === "Contribute" && <FaPencil className="inline ml-2 text-md" />}
         </button>
       )}
     </>

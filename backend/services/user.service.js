@@ -24,6 +24,7 @@ const { User } = require("../models/user.model.js");
  * 200 status code on duplicate email - https://stackoverflow.com/a/53144807
  */
 async function createUser(userBody) {
+  
   console.log("inside createUser service");
   console.log(userBody.email);
   let userExists = await User.isEmailTaken(userBody.email);

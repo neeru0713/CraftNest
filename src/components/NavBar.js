@@ -20,7 +20,7 @@ const NavBar = ({ handleSubmit }) => {
 
 
   return (
-    <div className=" h-[50px] flex w-[100%] justify-between bg-teal-950">
+    <div className=" h-[50px] flex w-[100%] justify-between bg-teal-950 fixed top-0 zindex-custom">
       <div className="flex text-white items-center">
         <Link to="/">
           <img src={mylogo} className="h-[76px]  mt-3" />
@@ -31,9 +31,15 @@ const NavBar = ({ handleSubmit }) => {
 
       <div
         className={`${
-          !user ? "w-[13%]" : "w-[19%]"
+          !user ? "w-[13%]" : "w-[21%]"
         }  h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
       >
+        {user?.role === "admin" && (
+          <Link to="/admin/manage">
+            <Button name="Manage" size="small" className="mb-2" />
+          </Link>
+        )}
+
         {/* <Button name="Explore" size="small" bgColor="bg-none" /> */}
         <div className="">
           <Popover />
@@ -43,7 +49,7 @@ const NavBar = ({ handleSubmit }) => {
           <Button
             handleSubmit={() => {
               localStorage.removeItem("craftnest_user");
-              setUser(null)
+              setUser(null);
             }}
             name="Log out"
             hoverBg="bg-teal-500"

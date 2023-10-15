@@ -5,9 +5,9 @@ const projectSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Reference to the User model
     required: true,
-  },   
+  },
   title: {
-    type: String
+    type: String,
   },
   fields: [
     {
@@ -25,6 +25,12 @@ const projectSchema = new mongoose.Schema({
       // Define other properties for different types if needed
     },
   ],
+  domain: {
+    type: String,
+  },
+  projectUrl: {
+    type: String,
+  },
 });
 
 const Project = mongoose.model("Project", projectSchema);

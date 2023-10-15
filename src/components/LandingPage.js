@@ -4,6 +4,7 @@ import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext, ModalContext } from "../App";
 
+
 const LandingPage = () => {
     const { showModal, setShowModal } = useContext(ModalContext);
   const { user, setUser } = useContext(UserContext);
