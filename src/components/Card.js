@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { AiFillGithub, AiOutlineMessage } from "react-icons/ai";
+import { MdArrowBackIosNew } from "react-icons/md";
 import Button from "./Button";
 
 const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-  }, [clickedCard])
+  useEffect(() => {}, [clickedCard]);
 
   function getUserName(email) {
     const userName = email.split("@")[0];
@@ -24,6 +24,17 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
       }
     }
     return file;
+  }
+
+    function getImage(index) {
+    
+      let file = data.fields[index].file;
+      return {
+        backgroundImage: `url("data:image/png;base64,${file}")`,
+        backgroundSize: 'cover'
+      }
+        
+    
   }
 
   function cardClickHandler() {
@@ -44,7 +55,9 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
   function getBgOfCard() {
     if (clickedCard === index) {
       return {
-        background: "transparent",
+        background: `#ECE9E6` /* fallback for old browsers */,
+        background: `-webkit-linear-gradient(to right, #FFFFFF, #ECE9E6)` /* Chrome 10-25, Safari 5.1-6 */,
+        background: `linear-gradient(to right, #FFFFFF, #ECE9E6)` /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */,
       };
     } else {
       return {
@@ -54,7 +67,7 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
   }
 
   const backButtonHandler = (e) => {
-    e.stopPropagation()
+    e.stopPropagation();
     cardRef.current.style.width = "100%";
     clickCardHandler(-1);
   };
@@ -65,7 +78,11 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
         <div
           ref={cardRef}
           onClick={cardClickHandler}
-          class="cursor-pointer card-parent relative rounded-[2rem] w-[100%] h-[38vw] shadow-lg overflow-hidden cursor-pointer inline-block hover:shadow-orange-500/80 transition-width duration-500 ease-in-out "
+          class={`cursor-pointer card-parent relative rounded-[2rem] w-[100%] h-[38vw] shadow-lg overflow-hidden cursor-pointer inline-block hover:shadow-orange-500/80 ${
+            clickedCard !== index
+              ? ""
+              : "transition-width duration-500 ease-in-out"
+          }`}
           onMouseEnter={(e) => {
             setIsHovered(true);
           }}
@@ -107,20 +124,44 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
           <div
             id="card"
             className={` ${
-              clickedCard === index ? "" : "card-child"
-            } border rounded-[2rem] h-full w-full flex flex-col bg-cover bg-center bg-no-repeat border-2 border-teal-600`}
+              clickedCard === index ? "overflow-scroll" : "card-child"
+              } border rounded-[2rem] h-full w-full flex flex-col  bg-cover bg-center bg-no-repeat border-2 border-teal-600`}
             style={getBgOfCard()}
           >
-            {clickedCard === index && <span onClick={backButtonHandler} className="text-black text-[50px] text-teal-600 absolute top-[-15px] left-2">&lt;</span>}
+            {clickedCard === index && (
+              <button
+                onClick={backButtonHandler}
+                className="absolute border border-2 border-teal-600 left-4 top-4 bg-teal-100  text-teal-600 pr-2 rounded hover:bg-teal-600 hover:text-white"
+              >
+                <MdArrowBackIosNew className="inline mt-[-2px]" />
+                Back
+              </button>
+            )}
+
+            {clickedCard === index && (
+              <div className="h-full w-full">
+                <h1 className="text-teal-700 text-3xl font-bold mt-4 text-center">
+                  {data.title}
+                </h1>
+                {data.fields.map((item, index) =>
+                  item.type === "text" ? (
+                    <p className="text-teal-700 p-4 text-lg mt-2">
+                      {item.value}
+                    </p>
+                  ) : (
+                    <div
+                      style={getImage(index)}
+                      className="h-[100%] w-[60%] mt-4 m-auto border rounded-[20px] border-[3px] border-teal-600"
+                    >
+                      {" "}
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
-
-      {/* {clickedCard === index && (
-        <div class="card-parent relative rounded-[2rem] w-[100%] h-[38vw] shadow-lg overflow-hidden cursor-pointer inline-block hover:shadow-orange-500/80">
-          Hello
-        </div>
-      )} */}
     </>
   );
 };
