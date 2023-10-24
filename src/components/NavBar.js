@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import mylogo from "../logo_transparent1.png";
 import { Link } from "react-router-dom";
 import { UserContext, ModalContext } from "../App";
+import {BsFillGearFill} from "react-icons/bs"
 // import useUser from "../customHooks/useUser"
 import {Popover} from "./Popover.js"
 
@@ -31,12 +32,17 @@ const NavBar = ({ handleSubmit }) => {
 
       <div
         className={`${
-          !user ? "w-[13%]" : "w-[21%]"
+          !user ? "w-[14%]" : "w-[22%]"
         }  h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
       >
         {user?.role === "admin" && (
-          <Link to="/admin/manage">
-            <Button name="Manage" size="small" className="mb-2" />
+          <Link
+            to="/admin/manage"
+            className="border border-1 border-white text-white flex items-center p-1 mt-[-8px] rounded hover:bg-white hover:text-teal-600"
+          >
+            <BsFillGearFill className="" />
+            <p className="font-semibold ml-1">Admin</p>
+            {/* <Button name="Manage" size="small" className="mb-2" /> */}
           </Link>
         )}
 

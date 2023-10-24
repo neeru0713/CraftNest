@@ -25,15 +25,12 @@ const { User } = require("../models/user.model.js");
  */
 async function createUser(userBody) {
   
-  console.log("inside createUser service");
-  console.log(userBody.email);
   let userExists = await User.isEmailTaken(userBody.email);
   if (userExists) {
     // let error = new ApiError(httpStatus.OK, "Email already taken");
     // throw error;
   } else {
     const result = await User.create(userBody);
-    console.log(result);
     return result;
   }
 }

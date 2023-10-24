@@ -1,13 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { AiFillGithub, AiOutlineMessage } from "react-icons/ai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Button from "./Button";
+import ChatApp from "./ChatApp";
+import { CreatorContext, ShowChatBoxContext } from "../App";
 
 const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const { creator, setCreator } = useContext(CreatorContext)
+  const { showChatBox, setShowChatBox } = useContext(ShowChatBoxContext);
 
-  useEffect(() => {}, [clickedCard]);
+  useEffect(() => {setCreator(data?.user)}, [clickedCard]);
 
   function getUserName(email) {
     const userName = email.split("@")[0];
@@ -97,18 +101,6 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
                 id="card-content"
                 className="flex flex-col justify-between w-[100%] p-2 mb-4 opacity-100"
               >
-                <div className="flex w-[24%] justify-between opacity-100">
-                  <div>
-                    <a href={data.projectUrl} target="_blank">
-                      <AiFillGithub className="h-7 w-7 opacity-100" />
-                    </a>
-                  </div>
-                  <div>
-                    {" "}
-                    <AiOutlineMessage className="h-7 w-7 opacity-100" />{" "}
-                  </div>
-                </div>
-
                 <div className="font-bold text-3xl opacity-100 my-2">
                   {data.title}
                 </div>
@@ -121,22 +113,38 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
             </div>
           )}
 
+          {/* max view of card */}
           <div
             id="card"
             className={` ${
               clickedCard === index ? "overflow-scroll" : "card-child"
-              } border rounded-[2rem] h-full w-full flex flex-col  bg-cover bg-center bg-no-repeat border-2 border-teal-600`}
+            } border rounded-[2rem] h-full w-full flex flex-col  bg-cover bg-center bg-no-repeat border-2 border-teal-600`}
             style={getBgOfCard()}
           >
             {clickedCard === index && (
-              <button
-                onClick={backButtonHandler}
-                className="absolute border border-2 border-teal-600 left-4 top-4 bg-teal-100  text-teal-600 pr-2 rounded hover:bg-teal-600 hover:text-white"
-              >
-                <MdArrowBackIosNew className="inline mt-[-2px]" />
-                Back
-              </button>
+              <>
+                <button
+                  onClick={backButtonHandler}
+                  className="absolute border border-2 border-teal-600 left-4 top-4 bg-teal-100  text-teal-600 pr-2 rounded hover:bg-teal-600 hover:text-white"
+                >
+                  <MdArrowBackIosNew className="inline mt-[-2px]" />
+                  Back
+                </button>
+
+                <div className="flex w-[6%] absolute right-8 top-2 justify-between opacity-100 text-black">
+                  <div>
+                    <a href={data.projectUrl} target="_blank">
+                      <AiFillGithub className="h-9 w-9 opacity-70 hover:opacity-100" />
+                    </a>
+                  </div>
+                  <div>
+                    {" "}
+                    <AiOutlineMessage onClick={()=>{setShowChatBox(true)}} className="h-9 w-9 opacity-70 hover:opacity-100" />{" "}
+                  </div>
+                </div>
+              </>
             )}
+           
 
             {clickedCard === index && (
               <div className="h-full w-full">

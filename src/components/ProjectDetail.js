@@ -3,6 +3,7 @@ import Navbar from "./NavBar"
 import { API_URL } from "../config/config";
 import { useParams } from "react-router-dom";
 import { Carousel } from './Carousel';
+import ChatApp from './ChatApp';
 export const ProjectDetail = () => {
     const [data, setData] = useState()
   
@@ -33,9 +34,10 @@ export const ProjectDetail = () => {
   return (
     <div>
       <Navbar />
-      <div className="blur-background">
+      <div className="blur-background overflow-hidden">
         <Carousel cards={data} />
       </div>
+      <ChatApp/>
     </div>
   );
 }

@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* Ensure the overlay appears on top of other elements */
+  z-index: 2; /* Ensure the overlay appears on top of other elements */
 }
 .auth-graintant {
     /* background-image: url("./Aubergine.jpg"); */
@@ -70,7 +70,7 @@ padding:10px;
 }
 
 #popover #explore-popover{
-  z-index: 999;
+  z-index: 2;
 }
 
 #explore-popover .popover-item{
@@ -94,10 +94,12 @@ background: linear-gradient(to top, #240b36, #c31432); /* W3C, IE 10+/ Edge, Fir
 
 
 }
-
+.zindex-custom-3{
+  z-index: 3;
+}
 
 .zindex-custom{
-  z-index: 999;
+  z-index: 1;
 }
 
 th{
@@ -154,11 +156,11 @@ background: linear-gradient(to top, #4e7e8a, #E6DADA); /* W3C, IE 10+/ Edge, Fir
 
 .card-parent:hover .card-overlay{
   @apply opacity-70;
-  z-index: 999;
+  z-index: 2;
 }
 
 .zindex-custom-2{
-  z-index: 1001;
+  z-index: 3;
 }
 
 

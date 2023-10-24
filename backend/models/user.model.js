@@ -37,6 +37,10 @@ const userSchema = mongoose.Schema(
       enum: ["admin", "user", "creator"],
       default: "user",
     },
+    socketId: {
+      type: String,
+      defautlt: ""
+    }
   },
   // Create createdAt and updatedAt fields automatically
   {

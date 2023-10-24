@@ -21,7 +21,6 @@ const generateToken = (userId, expires, type, secret = "mysecret") => {
     type: type,
   };
   const token = jwt.sign(payload, secret);
-  console.log(token);
   return token;
 };
 
@@ -42,7 +41,6 @@ const generateToken = (userId, expires, type, secret = "mysecret") => {
  */
 // Calculate the expiration date by adding the specified number of days to the current date
 const generateAuthTokens = async (user) => {
-  console.log("inside generateAuthTokens service");
   const expires =
     Math.floor(Date.now() / 1000) + 24 * 60 * 60;
   let token = generateToken(user._id, expires, "access");

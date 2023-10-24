@@ -3,10 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { io } from "socket.io-client";
 
-// let socket = io("http://localhost:8080");
-// console.log(socket);
+
+
 
 // socket.on("broadcast-msg", (msg) => {
 //   console.log("msg reveived by client ", msg);
@@ -18,9 +17,8 @@ import { io } from "socket.io-client";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  
     <App/>
-  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
