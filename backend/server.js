@@ -49,8 +49,9 @@ const server = app.listen(8080, () => {
 const io = socket(server, {
   cors: {
     origin: [
+      "https://main--genuine-scone-41e56a.netlify.app",
       "http://localhost:3000",
-      "https://main--genuine-scone-41e56a.netlify.app/",
+      
     ],
   },
 });
