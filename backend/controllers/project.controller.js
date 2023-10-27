@@ -94,6 +94,7 @@ const getProjects = async (req, res, next) => {
 console.log(projectsWithImages);
     res.status(200).json(projectsWithImages);
   } catch (error) {
+    console.log(error)
     res
       .status(500)
       .json({ message: "Error fetching projects", error: error.message });
