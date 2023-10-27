@@ -56,9 +56,11 @@ const saveProject = async (req, res, next) => {
 
 const getProjects = async (req, res, next) => {
   try {
+    console.log(req.params.domain);
     const domain = req.params.domain;
     
     const projects = await Project.find({ domain }).populate("user");
+    console.log(projects);
 
 
     const projectsWithImages = projects.map((project) => {
@@ -90,7 +92,7 @@ const getProjects = async (req, res, next) => {
    
     });
 
-
+console.log(projectsWithImages);
     res.status(200).json(projectsWithImages);
   } catch (error) {
     res
