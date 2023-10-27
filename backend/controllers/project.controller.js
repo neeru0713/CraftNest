@@ -29,13 +29,36 @@ const saveProject = async (req, res, next) => {
       return JSON.parse(field);
     });
 
+    let arrayWithSavedImages = fieldArray.map((field) => {
+      if (field.type === 'image') {
+        let imageData = fs.readFileSync(path.join(__dirname, '..', 'uploads', field.image))
+        let extension = field.image.split('.')[1].toLowerCase()
+        let contentType = `image/${extension}`
+        return {
+          type: field.type,
+          value: field.value,
+          image: {
+            data: imageData,
+            contentType: contentType,
+            imageName: field.image,
+          },
+        };
+      } else {
+        return field
+      }
+    })
+      
+      console.log(arrayWithSavedImages);
+
+    console.log(fieldArray[0].image);
+
     let userObj = JSON.parse(user);
     let project = new Project({
       title,
       domain,
       projectUrl,
       user: userObj._id,
-      fields: fieldArray,
+      fields: arrayWithSavedImages,
     });
 
     await project.save();
@@ -68,13 +91,12 @@ const getProjects = async (req, res, next) => {
         fields: project.fields
         .map((field) => {
           if (field.type === "image") {
-            const imagePath = path.join(__dirname, "../uploads/", field.image);
-            const fileBuffer = fs.readFileSync(imagePath);
-            const base64Image = fileBuffer.toString("base64");
+            
+            const base64Image = field.image.data.toString("base64");
             return {
               type: field.type,
               value: field.value,
-              image: field.image,
+              image: field.image.imageName,
               _id: field._id,
               file: base64Image, // Send the base64 encoded image to the client
             };
@@ -110,9 +132,8 @@ const getAllProjects = async (req, res, next) => {
         fields: project.fields
         .map((field) => {
           if (field.type === "image") {
-            const imagePath = path.join(__dirname, "../uploads/", field.image);
-            const fileBuffer = fs.readFileSync(imagePath);
-            const base64Image = fileBuffer.toString("base64");
+        
+            const base64Image = field.image.data.toString("base64");
             return {
               type: field.type,
               value: field.value,

@@ -20,7 +20,9 @@ const projectSchema = new mongoose.Schema({
         type: String,
       },
       image: {
-        type: String,
+        data: Buffer,
+        contentType: String,
+        imageName: String
       },
       // Define other properties for different types if needed
     },
