@@ -125,8 +125,9 @@ console.log(projectsWithImages);
 
 const getAllProjects = async (req, res, next) => {
   try {
-
+    console.log("Get all projects controller method")
     const projects = await Project.find().populate("user");
+     console.log("Projects found : ", projects);
      const projectsWithImages = projects.map((project) => {
       return {
         fields: project.fields
@@ -153,7 +154,7 @@ const getAllProjects = async (req, res, next) => {
       
    
     });
-
+ console.log("projectsWithImages found : ", projectsWithImages);
 
     res.status(200).json(projectsWithImages);
   } catch (err) {
