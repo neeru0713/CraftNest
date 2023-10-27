@@ -151,13 +151,13 @@ const getAllProjects = async (req, res, next) => {
         projectUrl: project.projectUrl
       }
       
-      
    
     });
 
 
     res.status(200).json(projectsWithImages);
-  } catch(err) {
+  } catch (err) {
+    console.log("error while fetching all projects : ", err)
     return res.status(400).json({error: err});
   }
 }
