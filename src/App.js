@@ -7,6 +7,7 @@ import { AdminView } from "./components/AdminView";
 import { ProjectDetail } from "./components/ProjectDetail";
 
 import React, { useState, useEffect, createContext } from "react";
+import { API_URL } from "./config/config";
 
 export const UserContext = createContext();
 export const ModalContext = createContext();
@@ -23,7 +24,7 @@ function App() {
 
   useEffect(() => {
     console.log("use effect 1");
-    const s = io("http://localhost:8080");
+    const s = io(API_URL);
     setSocket(s);
    
   }, []);

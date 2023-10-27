@@ -89,7 +89,6 @@ const getProjects = async (req, res, next) => {
       }
       
       
-   
     });
 
 console.log(projectsWithImages);
