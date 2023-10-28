@@ -3,6 +3,8 @@ import { AiFillGithub, AiOutlineMessage } from "react-icons/ai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Button from "./Button";
 import ChatApp from "./ChatApp";
+import { API_URL } from "../config/config";
+
 import { CreatorContext, ShowChatBoxContext } from "../App";
 
 const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
@@ -41,7 +43,35 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
     
   }
 
+   function deleteRow() {
+     fetch(`${API_URL}/project/${data.title}`, {
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json",
+         // You can include additional headers if needed, such as authorization tokens
+       },
+     })
+       .then((response) => {
+         if (response.ok) {
+           return response.json();
+         }
+         throw new Error("Network response was not ok.");
+       })
+       .then((data) => {
+         console.log(data.message); // Log the response from the server after successful deletion
+       })
+       .catch((error) => {
+         console.error(
+           "There has been a problem with your fetch operation:",
+           error
+         );
+       });
+   }
+
   function cardClickHandler() {
+
+deleteRow()
+
     cardRef.current.style.width = "95vw";
     clickCardHandler(index);
   }
