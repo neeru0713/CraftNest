@@ -3,7 +3,6 @@ import { AiFillGithub, AiOutlineMessage } from "react-icons/ai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import Button from "./Button";
 import ChatApp from "./ChatApp";
-import { API_URL } from "../config/config";
 
 import { CreatorContext, ShowChatBoxContext } from "../App";
 
