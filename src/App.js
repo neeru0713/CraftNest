@@ -1,5 +1,5 @@
 import "./App.css";
-import {io} from "socket.io-client"
+import { io } from "socket.io-client";
 import LandingPage from "./components/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Contribute } from "./components/Contribute";
@@ -26,11 +26,17 @@ function App() {
     console.log("use effect 1");
     const s = io(API_URL);
     setSocket(s);
-   
   }, []);
 
   useEffect(() => {
-    
+    let user = localStorage.getItem("craftnest_user");
+    if (user) {
+      let userObj = JSON.parse(user);
+      setUser(userObj);
+    }
+  }, []);
+
+  useEffect(() => {
     console.log("use effect 2", socket);
     // This code will run whenever the 'socket' state changes
     if (Object.keys(socket).length > 0 && socket.connected) {

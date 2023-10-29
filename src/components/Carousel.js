@@ -11,31 +11,27 @@ export const Carousel = ({ cards }) => {
   const [filteredCards, setFilteredCards] = useState();
 
   useEffect(() => {
-  
-      setFilteredCards(cards);
-    
+    setFilteredCards(cards);
   }, [cards]);
 
-   const handleLeftClick = () => {
-     setStartIndex((prev) => {
-       return prev - 1;
-     });
-     setEndIndex((prev) => {
-       return prev - 1;
-     });
+  const handleLeftClick = () => {
+    setStartIndex((prev) => {
+      return prev - 1;
+    });
+    setEndIndex((prev) => {
+      return prev - 1;
+    });
 
-     let temp = [];
+    let temp = [];
 
-     for (let i = startIndex - 1; i <= endIndex - 1; i++) {
-       
-       let j = i;
-     
-       temp.push(cards[j]);
-     }
+    for (let i = startIndex - 1; i <= endIndex - 1; i++) {
+      let j = i;
 
-    
-     setFilteredCards(temp);
-   };
+      temp.push(cards[j]);
+    }
+
+    setFilteredCards(temp);
+  };
 
   const handleRightClick = () => {
     setStartIndex((prev) => {
@@ -45,16 +41,15 @@ export const Carousel = ({ cards }) => {
       return prev + 1;
     });
     let temp = [];
-    
-    for (let i = startIndex+1; i <= endIndex+1; i++) {
 
+    for (let i = startIndex + 1; i <= endIndex + 1; i++) {
       let j = i;
       if (i >= cards.length) {
         j = i % cards.length;
       }
       temp.push(cards[j]);
     }
-    setFilteredCards(temp)
+    setFilteredCards(temp);
   };
 
   function clickCardHandler(index) {
@@ -62,7 +57,7 @@ export const Carousel = ({ cards }) => {
   }
 
   return (
-    <div className="carousel flex items-center w-[100%] pt-[6rem] px-8">
+    <div className="carousel h-[95vh] flex bg-slate-700 items-center w-[100%] px-8">
       {startIndex > 0 && clickedCard === -1 && (
         <button
           onClick={handleLeftClick}
@@ -71,7 +66,7 @@ export const Carousel = ({ cards }) => {
           <IoChevronBackCircleOutline />
         </button>
       )}
-      <div className="grid grid-cols-5 gap-8 w-[100%]">
+      <div className="grid grid-cols-5 gap-8 h-[90%] w-[100%]">
         {cards?.slice(startIndex, endIndex + 1).map((card, index) => (
           <Card
             data={card}

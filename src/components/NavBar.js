@@ -1,44 +1,50 @@
 import React, { useState, useEffect, useContext } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
-import mylogo from "../logo_transparent1.png";
+
 import { Link } from "react-router-dom";
 import { UserContext, ModalContext } from "../App";
-import {BsFillGearFill} from "react-icons/bs"
+import { BsFillGearFill } from "react-icons/bs";
 // import useUser from "../customHooks/useUser"
-import {Popover} from "./Popover.js"
+import { Popover } from "./Popover.js";
 
 const NavBar = ({ handleSubmit }) => {
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const { showModal, setShowModal } = useContext(ModalContext);
-  
+
   function loginHandler() {
     // setIsModalOpen(true);
-    setShowModal(true)
+    setShowModal(true);
   }
 
-
-
   return (
-    <div className=" h-[50px] flex w-[100%] justify-between bg-teal-950 fixed top-0 zindex-custom">
-      <div className="flex text-white items-center">
-        <Link to="/">
+    <div className=" h-[50px] flex w-[100%] justify-between  zindex-custom">
+      <div className="flex flex-col text-black items-center">
+        {/* <Link to="/">
           <img src={mylogo} className="h-[76px]  mt-3" />
+        </Link> */}
+        {/* <div className="border border-2 h-[70%] mr-2 -ml-2"></div> */}
+        <Link to="/">
+          <div className="font-semibold brand-name text-white text-4xl ml-4 mt-3 z-4">
+            <span className="font-bold text-5xl text-[#4AC1E8]">C</span>raft
+            <span className="font-bold text-[#4AC1E8]">N</span>
+            est
+          </div>
         </Link>
-        <div className="border border-2 h-[70%] mr-2 -ml-2"></div>
-        <div className="font-semibold text-lg">CraftNest</div>
+
+        {/* <img src={mylogo} className="h-[76px] w-[150px] mt-[-20px] z-[-1]" /> */}
       </div>
 
       <div
         className={`${
-          !user ? "w-[14%]" : "w-[22%]"
-        }  h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
+          !user ? "w-[14%]" : user?.role === "admin" ? "w-[24%]" : "w-[18%]"
+        }   h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
       >
         {user?.role === "admin" && (
           <Link
             to="/admin/manage"
-            className="border border-1 border-white text-white flex items-center p-1 mt-[-8px] rounded hover:bg-white hover:text-teal-600"
+            className="border border-1 border-white text-white flex items-center p-2 bg-[#3998b5] hover:bg-[#4ac1e8] rounded hover:bg-white"
           >
             <BsFillGearFill className="" />
             <p className="font-semibold ml-1">Admin</p>
@@ -47,7 +53,7 @@ const NavBar = ({ handleSubmit }) => {
         )}
 
         {/* <Button name="Explore" size="small" bgColor="bg-none" /> */}
-        <div className="">
+        <div className="w-[40%]">
           <Popover />
         </div>
 
@@ -57,11 +63,9 @@ const NavBar = ({ handleSubmit }) => {
               localStorage.removeItem("craftnest_user");
               setUser(null);
             }}
+            size="medium"
             name="Log out"
-            hoverBg="bg-teal-500"
-            size="small"
-            bgColor="bg-none"
-            className="mb-2 mr-3 hover:bg-teal-600"
+            className="bg-[#3998b5] border-1 text-white hover:bg-[#4ac1e8]"
           />
         ) : null}
 
@@ -77,19 +81,20 @@ const NavBar = ({ handleSubmit }) => {
           <div onClick={loginHandler}>
             <Button
               name="Log In"
-              size="small"
+              size="medium"
               bgColor="bg-none"
-              className="mb-2 hover:bg-teal-600"
+              className="bg-[#3998b5] border-1 text-white hover:bg-[#4ac1e8]"
             />
           </div>
         ) : (
-          <div className="border rounded-full gradient-username h-[38px] w-[40px] text-white font-semibold text-center mb-[10px] pt-[8px] text-sm">
-            NR
+          <div className="border rounded-full bg-[#4AC1E8] h-[40px] w-[40px] text-white font-semibold text-center p-1 mt-2 mb-[10px] text-xl">
+            {user.email.split("")[0].toUpperCase()}
           </div>
         )}
       </div>
 
       <Modal />
+      {/* <Notification show={showNotification} msg={notifMessage}/> */}
     </div>
   );
 };

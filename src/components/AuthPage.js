@@ -1,15 +1,13 @@
-import React, { useState, useContext  } from "react";
+import React, { useState, useContext } from "react";
 import Input from "./Input";
 import Button from "./Button";
-import { Notification } from "./Notification"
+import { Notification } from "./Notification";
 import { API_URL } from "../config/config";
 // import useUser from "../customHooks/useUser"
 import { UserContext, ModalContext } from "../App";
+import { BiErrorCircle } from "react-icons/bi";
 
-const AuthPage = ({
-  togglePage,
-  whichAuthPage,
-}) => {
+const AuthPage = ({ togglePage, whichAuthPage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -22,7 +20,6 @@ const AuthPage = ({
   const { showModal, setShowModal } = useContext(ModalContext);
 
   const validateEmail = (email) => {
-     
     // Regular expression for basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -55,7 +52,7 @@ const AuthPage = ({
 
   const handleSubmit = (e) => {
     // e.preventDefault();
-   
+
     const postData = {
       email: email,
       password: password,
@@ -84,17 +81,16 @@ const AuthPage = ({
       })
       .then((data) => {
         // Handle the successful response data
-         let name = "auth";
-         let value = data?.tokens.access.token;
-         let expiry = data?.tokens.access.expires;
-         // set the cookie with token returned from api
-         document.cookie = `${name}=${value};expires=${expiry};path=/`;
-         localStorage.setItem("craftnest_user", JSON.stringify(data?.user));
-        setUser(data.user)
+        let name = "auth";
+        let value = data?.tokens.access.token;
+        let expiry = data?.tokens.access.expires;
+        // set the cookie with token returned from api
+        document.cookie = `${name}=${value};expires=${expiry};path=/`;
+        localStorage.setItem("craftnest_user", JSON.stringify(data?.user));
+        setUser(data.user);
         setShowNotification(true);
         setNotifMsg(data.message);
-        setShowModal(false)
-       
+        setShowModal(false);
       })
       .catch((error) => {
         // Handle errors
@@ -130,7 +126,7 @@ const AuthPage = ({
         </p>
       </div>
 
-      <div className="flex flex-col ml-4 p-4 text-lg gap-4 font-semibold text-black">
+      <div className="flex flex-col ml-4 p-4 text-lg gap-4  text-white">
         <Input
           type="email"
           label="Email"
@@ -139,7 +135,12 @@ const AuthPage = ({
           value={email}
           onChange={handleInputChange}
         />
-        {emailError && <span className="text-red-500">{emailError}</span>}
+        {emailError && (
+          <span className="text-red-500 flex items-center gap-1 ">
+            {" "}
+            <BiErrorCircle /> <p>{emailError}</p>
+          </span>
+        )}
         <Input
           type="password"
           label="Password"
@@ -148,7 +149,13 @@ const AuthPage = ({
           onChange={handleInputChange}
           className="mt-2"
         />
-        {passwordError && <span className="text-red-500">{passwordError}</span>}
+        {passwordError && (
+          <span className="text-red-500 flex items-center gap-1 ">
+            {" "}
+            <BiErrorCircle /> <p>{passwordError}</p>
+          </span>
+        )}
+
         <Button
           name={whichAuthPage === "login" ? "Login" : "Register"}
           type="form-btn"
@@ -157,7 +164,9 @@ const AuthPage = ({
         />
       </div>
 
-      {/* {showNotification ? (<Notification msg={ notifMsg } />) : null}  */}
+      {showNotification ? (
+        <Notification msg={notifMsg} show={showNotification} />
+      ) : null}
     </div>
   );
 };

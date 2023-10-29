@@ -1,11 +1,11 @@
-import React from 'react'
-import NavBar from './NavBar'
-import { ProjectInput } from './ProjectInput'
+import React from "react";
+import NavBar from "./NavBar";
+import { ProjectInput } from "./ProjectInput";
 export const Contribute = () => {
   return (
-      <div>
-          <NavBar />
-          <ProjectInput/>
+    <div className="bg-slate-700">
+      <NavBar />
+      <ProjectInput />
     </div>
-  )
-}
+  );
+};

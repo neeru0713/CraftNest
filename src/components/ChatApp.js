@@ -35,27 +35,27 @@ const ChatApp = () => {
   };
 
   useEffect(() => {
-     console.log("chatapp render");
-     if (Object.keys(socket).length > 0) {
-       socket.on("receive-message", (message) => {
-         const { text, senderSocketId, recipientSocketId } = message;
-         if (recipientSocketId === user.socketId) {
-           // Handle the received message here
-           console.log("Received message: ", text, " from ", senderSocketId);
-           setMessages((prevMessages) => [
-             { text, senderSocketId, recipientSocketId },
-             ...prevMessages,
-           ]);
-         }
-       });
-     }
+    console.log("chatapp render");
+    if (Object.keys(socket).length > 0) {
+      socket.on("receive-message", (message) => {
+        const { text, senderSocketId, recipientSocketId } = message;
+        if (recipientSocketId === user.socketId) {
+          // Handle the received message here
+          console.log("Received message: ", text, " from ", senderSocketId);
+          setMessages((prevMessages) => [
+            { text, senderSocketId, recipientSocketId },
+            ...prevMessages,
+          ]);
+        }
+      });
+    }
 
-     // Clean up the event listener when the component unmounts
-     return () => {
-       if (Object.keys(socket).length > 0) {
-         socket.off("receive-message");
-       }
-     };
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (Object.keys(socket).length > 0) {
+        socket.off("receive-message");
+      }
+    };
   }, [socket]);
 
   function sendMessage() {
@@ -104,7 +104,7 @@ const ChatApp = () => {
           </div>
           <div
             id="messages"
-            className="bg-red-100 h-[418px] flex flex-col-reverse"
+            className="bg-white  h-[418px] flex flex-col-reverse"
           >
             {messages.map((message, index) => (
               <div key={index}>

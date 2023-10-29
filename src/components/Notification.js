@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const Notification = ({ msg, show }) => {
+export const Notification = ({ show, msg }) => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {

@@ -4,10 +4,12 @@ import { FaPencil } from "react-icons/fa6";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { API_URL } from "../config/config";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext, ModalContext } from "../App";
 import { Notification } from "./Notification";
-import { BsCardImage, BsFillRocketTakeoffFill } from "react-icons/bs";
+import { BsCardImage, BsCheck2Square } from "react-icons/bs";
+import { GiPencil } from "react-icons/gi";
 
 import { RxCrossCircled } from "react-icons/rx";
 import { PiTextTBold } from "react-icons/pi";
@@ -15,16 +17,20 @@ import { PiTextTBold } from "react-icons/pi";
 export const ProjectInput = () => {
   const textareaRef = useRef([]);
   const [selectedOption, setSelectedOption] = useState("");
-   const [projectLink, setProjectLink] = useState("");
+  const [projectLink, setProjectLink] = useState("");
   const [fields, setFields] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isHovered, setIsHovered] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [showHeading, setShowHeading] = useState(true);
   const [projectTitle, setProjectTitle] = useState("");
-    const [notifMessage, setNotifMessage] = useState("");
-  
-   const [showNotification, setShowNotification] = useState(false)
+  const [notifMessage, setNotifMessage] = useState(
+    "Project saved successfully"
+  );
+
+  const navigate = useNavigate();
+
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleHover = (val, index) => {
     // console.log(val,index)
@@ -34,9 +40,9 @@ export const ProjectInput = () => {
     setIsHovered(modifiedArray);
   };
 
-   const handleSelectChange = (event) => {
-     setSelectedOption(event.target.value);
-   };
+  const handleSelectChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const addTextElement = () => {
     let obj = {
@@ -93,7 +99,7 @@ export const ProjectInput = () => {
 
   function textChangeHandler(e) {
     let index = e.target.getAttribute("data-id");
-  
+
     textareaRef.current[index].style.height = "auto";
     textareaRef.current[index].style.height =
       textareaRef.current[index].scrollHeight + "px";
@@ -122,14 +128,13 @@ export const ProjectInput = () => {
       }
       return ele;
     });
-    debugger
+
     const formData = new FormData();
     // const userBlob = new Blob([JSON.stringify(user)], { type: 'application/json' });
     formData.append("user", JSON.stringify(user));
     formData.append("title", projectTitle);
     formData.append("domain", selectedOption);
     formData.append("projectUrl", projectLink);
-
 
     fields.forEach((item) => {
       if (item.type === "image") {
@@ -154,15 +159,14 @@ export const ProjectInput = () => {
       }
     });
 
-    console.log("file in ui : ", formData);
-
     let url = `${API_URL}/project`;
 
     axios.post(url, formData, {}).then((res) => {
       console.log(res);
-      setShowNotification(true)
-      setNotifMessage(res.message)
-
+      setShowNotification(true);
+      setTimeout(() => {
+        navigate(`/projects/${selectedOption}`);
+      }, 1500);
     });
 
     // Handle the response from the server
@@ -171,57 +175,69 @@ export const ProjectInput = () => {
   };
 
   return (
-    <div className={` h-auto px-20 relative mt-10`}>
-      <div id="header" className="flex justify-center">
+    <div className={` h-auto  px-20 relative mt-10`}>
+      <div id="header" className="flex justify-evenly ml-[38%] w-[60%]">
+        <div
+          onClick={addTextElement}
+          className="text-white fixed flex left-[2%] top-[10%]"
+        >
+          <Button
+            name="Text"
+            className="bg-green-700 hover:bg-green-600  w-[80px]"
+          />
+        </div>
+        <div
+          onClick={addImageElement}
+          className="text-white fixed flex left-[2%] top-[16%]"
+        >
+          <Button
+            name="Image"
+            className="bg-green-700 hover:bg-green-600 w-[80px]"
+          />
+          {/* <BsCardImage className="h-[30px] w-[30px]" /> */}
+        </div>
+
         {showHeading ? (
-          <FaPencil
-            className="mt-6 text-xl mr-4 fill-teal-600 h-7 w-7"
+          <GiPencil
+            className="mt-1 text-xl fill-slate-100 h-8 w-10"
             onClick={() => {
               setShowHeading(false);
             }}
           />
         ) : (
-          <BsFillCheckCircleFill
-            className="mt-7 text-3xl mr-4 fill-teal-600"
+          <BsCheck2Square
+            className="mt-2 text-3xl mr-2 fill-slate-100 h-8 w-10"
             onClick={() => {
               setShowHeading(true);
             }}
           />
         )}
 
-        <div className="flex justify-center mb-8">
+        <div className="flex w-[100%] mb-8">
           {showHeading ? (
-            <h1
-              className={`text-3xl font-bold mt-3 p-2  ${
-                isDarkMode ? "text-white" : "text-slate-700"
-              }`}
-            >
-              {projectTitle.length === 0
-                ? "Write your creative projects"
-                : projectTitle}
+            <h1 className={`text-4xl w-full font-bold text-white`}>
+              {projectTitle.length === 0 ? "Project Title" : projectTitle}
             </h1>
           ) : (
             <input
               type="text"
               placeholder="Project Title"
               value={projectTitle}
-              className="mt-4 p-2 border border-2 p-2 mt-[20px] rounded-[10px] border-teal-600 font-semibold"
+              className="w-[24rem] p-2 border border-2 rounded-[10px] border-slate-800 font-semibold"
               onChange={(e) => {
                 setProjectTitle(e.target.value);
               }}
             />
           )}
 
-          <BsFillRocketTakeoffFill className="mt-6 ml-2 mt-[28px] text-3xl fill-teal-600" />
+          {/* <BsFillRocketTakeoffFill className="mt-6 ml-2 mt-[28px] text-3xl fill-teal-600" /> */}
         </div>
       </div>
-      <div onClick={addTextElement} className=" fixed right-6 top-16">
-        <PiTextTBold className="h-[30px] w-[30px]" />
-      </div>
-      <div onClick={addImageElement} className=" fixed right-6 top-[100px]">
-        <BsCardImage className="h-[30px] w-[30px]" />
-      </div>
-      <div id="main-section" className="flex flex-col gap-2 w-[80%]">
+
+      <div
+        id="main-section"
+        className="flex flex-col ml-[7%] h-[100%] min-h-[92vh] gap-2 w-[80%]"
+      >
         {fields.map((ele, index) => (
           <div
             className="flex relative mb-6"
@@ -241,7 +257,7 @@ export const ProjectInput = () => {
                 data-id={index}
                 onChange={textChangeHandler}
                 value={ele.value}
-                className="w-[100%] p-2 h-auto block  resize-none border border-none outline-none decoration-solid bg-transparent text-lg"
+                className="w-[100%] p-4 block border rounded-[10px] border-1 border-slate-100 resize-none text-white decoration-solid bg-transparent text-lg"
               />
             ) : (
               <div className="h-[30%] w-[100%] text-center">
@@ -258,7 +274,8 @@ export const ProjectInput = () => {
                       className="hidden"
                       id="inputTag"
                     />
-                    <AiOutlineCloudUpload className="text-3xl absolute left-[46%] top-[46%]" />
+                    <p className="mt-[10%]">Upload image file</p>
+                    <AiOutlineCloudUpload className="text-3xl absolute left-[46%] top-[20%]" />
                   </label>
                 )}
                 {ele.previewImageUrl && (
@@ -277,13 +294,13 @@ export const ProjectInput = () => {
 
             {isHovered[index].showCrossIcon && (
               <div
-                className={`delete-icon top-[-20px] absolute right-0`}
+                className={`delete-icon top-[2%] absolute right-[0.4%]`}
                 onClick={(event) => {
                   removeElement(event, index);
                 }}
                 data-id={index}
               >
-                <AiFillCloseCircle className="text-2xl h-8 w-8 fill-[#a0144f]" />
+                <AiFillCloseCircle className="text-2xl h-8 w-8 fill-slate-300" />
               </div>
             )}
           </div>
@@ -292,7 +309,7 @@ export const ProjectInput = () => {
       <div className="w-[13%] fixed right-0 top-[20%] h-[300px] ">
         <select
           id="dropdown"
-          className=" border border-2 p-2 rounded-[10px] border-teal-600 font-semibold"
+          className=" border border-2 p-2 rounded-[10px] border-slate-100 font-semibold"
           value={selectedOption}
           onChange={handleSelectChange}
         >
@@ -307,7 +324,7 @@ export const ProjectInput = () => {
         </select>
 
         <input
-          className="border border-2 p-2 rounded-[10px] border-teal-600 font-semibold w-[90%] mt-2"
+          className="border border-2 p-2 rounded-[10px] border-slate-200 font-semibold w-[90%] mt-2"
           onChange={(e) => {
             setProjectLink(e.target.value);
           }}
@@ -320,12 +337,12 @@ export const ProjectInput = () => {
         <Button
           name="Save"
           handleSubmit={saveProject}
-          bgColor="bg-[#a0144f]"
-          hoverText="black-400"
-          className="save-btn"
+          bgColor="bg-green-700"
+          isButtonDisable={fields.length > 1 ? false : true}
+          className="hover:bg-green-600 text-white"
         />
       </div>
-      <Notification show={showNotification} msg={notifMessage}/>
+      <Notification show={showNotification} msg={notifMessage} />
     </div>
   );
 };

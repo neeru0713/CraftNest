@@ -1,11 +1,11 @@
 import React from "react";
 
-const Input = ({ type, label, value, name, onChange, placeholder="" }) => {
+const Input = ({ type, label, value, name, onChange, placeholder = "" }) => {
   return (
     <div className="form-group flex flex-col ">
       {label && <label htmlFor={name}>{label}</label>}
       <input
-        className="border border-1 border-gray-700 p-1 mt-1"
+        className="border border-1 rounded border-white p-2 mt-1 bg-[#2B3149]"
         type={type}
         name={name}
         value={value}

@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import photo from "../photography.jpg"
+import photo from "../photography.jpg";
 import AuthPage from "./AuthPage";
 import { ModalContext } from "../App";
 
-
-
 const Modal = () => {
-const { showModal, setShowModal } = useContext(ModalContext);
+  const { showModal, setShowModal } = useContext(ModalContext);
 
   const [whichAuthPage, setWhichAuthPage] = useState("login");
   const modalRef = useRef(null);
@@ -40,7 +38,7 @@ const { showModal, setShowModal } = useContext(ModalContext);
             ref={modalRef}
             className={`flex ${
               whichAuthPage === "login" ? "flex-row " : "flex-row-reverse"
-            } fixed h-[75%] w-[50%] top-16 text-[#243B55] left-[27%] justify-center items-center border border-none rounded-lg`}
+            } fixed h-[55%] w-[50%] top-[20%] text-[#243B55] left-[27%] justify-center items-center border border-none rounded-lg`}
           >
             <div
               className={`w-[50%] h-[100%] bg-[#f6f8f7] flex flex-col justify-between ${
@@ -49,21 +47,14 @@ const { showModal, setShowModal } = useContext(ModalContext);
                   : "rounded-tr-lg rounded-br-lg"
               }`}
             >
-              <div className=" m-4 ml-8">
-                <h1 className="font-bold text-3xl">Join our community</h1>
-                <h1 className="font-bold text-3xl">Collaborate Projects</h1>
-                <ul className="text-xl mt-10 font-semibold">
-                  <li>Professional Projects</li>
-                  <li>100% free</li>
-                  <li>Collaborate</li>
-                </ul>
-              </div>
-
-              <img src={photo} className="h-[50%]" />
+              <img
+                src="https://images.unsplash.com/photo-1691036562463-a44e242a8ec8?auto=format&fit=crop&q=80&w=2000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                className="h-[100%]"
+              />
             </div>
 
             <div
-              className={`w-[50%] h-[100%] text-white auth-graintant  ${
+              className={`w-[50%] h-[100%] text-white bg-[#4F597C]  ${
                 whichAuthPage === "login"
                   ? "rounded-tr-lg rounded-br-lg"
                   : "rounded-tl-lg rounded-bl-lg"
@@ -72,7 +63,6 @@ const { showModal, setShowModal } = useContext(ModalContext);
               <AuthPage
                 togglePage={setWhichAuthPage}
                 whichAuthPage={whichAuthPage}
-              
               />
             </div>
           </div>

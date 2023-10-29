@@ -1,46 +1,43 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, { useState, useRef, useEffect, useContext } from "react";
 // import Button from "./Button"
-import { PopoverItem } from './PopoverItem';
+import { PopoverItem } from "./PopoverItem";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { UserContext } from "../App";
 export const Popover = () => {
-    const popoverRef = useRef(null);
-    const [show, setShow] = useState(false);
-    const [hoverItem, setHoverItem] = useState('')
+  const popoverRef = useRef(null);
+  const [show, setShow] = useState(false);
+  const [hoverItem, setHoverItem] = useState("");
+  const { user } = useContext(UserContext);
 
-    useEffect(() => {
-      if (popoverRef.current) {
-        popoverRef.current.addEventListener("mouseenter", () => {
-          setShow(true)
-        });
-          
-          popoverRef.current.addEventListener("mouseleave", () => {
-            setShow(false);
-          });
-      }
-    }, [show]);
+  useEffect(() => {
+    if (popoverRef.current) {
+      popoverRef.current.addEventListener("mouseenter", () => {
+        setShow(true);
+      });
 
-    
-  
-    const showPopover = (event, val) => {
-          
-        setShow(val);
-        
-    };
-    
-     const popoverItemHover = (event, val) => {
-         
-         setHoverItem(event.target.innerText);
-      };
+      popoverRef.current.addEventListener("mouseleave", () => {
+        setShow(false);
+      });
+    }
+  }, [show]);
+
+  const showPopover = (event, val) => {
+    setShow(val);
+  };
+
+  const popoverItemHover = (event, val) => {
+    setHoverItem(event.target.innerText);
+  };
   return (
-    <div id='popover'>
+    <div id="popover">
       {/* <div className=" w-[100%] text-white "> */}
       <div
-        className="font-semibold text-white text-xl mt-1 flex ml-6 "
+        className="font-semibold text-white text-xl mt-4 flex ml-6 "
         onMouseEnter={(event) => showPopover(event, true)}
         onMouseLeave={(event) => showPopover(event, false)}
       >
-        <span >Explore</span>
-        <span className="mt-[6px] ml-2 h-10 w-10">
+        <span className="text-2xl mt-1">Explore</span>
+        <span className="mt-[9px] ml-2 h-12 w-12">
           {show ? <BiChevronUp /> : <BiChevronDown />}
         </span>
       </div>
@@ -48,7 +45,9 @@ export const Popover = () => {
 
       {show && (
         <div
-          className="bg-white absolute right-[5%] w-[300px] h-[300px] rounded border border-2 border-teal-500 flex flex-col"
+          className={`bg-white absolute ${
+            !user ? "right-[5%] " : "right-[10%]"
+          }  top-[50px] w-[180px] rounded flex flex-col`}
           id="explore-popover"
           ref={popoverRef}
         >
@@ -72,11 +71,7 @@ export const Popover = () => {
             handleHover={popoverItemHover}
             showBg={hoverItem === "Graphic Design"}
           />
-          <PopoverItem
-            itemName="Fashion Design"
-            handleHover={popoverItemHover}
-            showBg={hoverItem === "Fashion Design"}
-          />
+
           <PopoverItem
             itemName="Music Composition"
             handleHover={popoverItemHover}
@@ -91,4 +86,4 @@ export const Popover = () => {
       )}
     </div>
   );
-}
+};

@@ -9,10 +9,12 @@ import { CreatorContext, ShowChatBoxContext } from "../App";
 const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
-  const { creator, setCreator } = useContext(CreatorContext)
+  const { creator, setCreator } = useContext(CreatorContext);
   const { showChatBox, setShowChatBox } = useContext(ShowChatBoxContext);
 
-  useEffect(() => {setCreator(data?.user)}, [clickedCard]);
+  useEffect(() => {
+    setCreator(data?.user);
+  }, [clickedCard]);
 
   function getUserName(email) {
     const userName = email.split("@")[0];
@@ -31,20 +33,15 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
     return file;
   }
 
-    function getImage(index) {
-    
-      let file = data.fields[index].file;
-      return {
-        backgroundImage: `url("data:image/png;base64,${file}")`,
-        backgroundSize: 'cover'
-      }
-        
-    
+  function getImage(index) {
+    let file = data.fields[index].file;
+    return {
+      backgroundImage: `url("data:image/png;base64,${file}")`,
+      backgroundSize: "cover",
+    };
   }
 
-
   function cardClickHandler() {
-
     cardRef.current.style.width = "95vw";
     clickCardHandler(index);
   }
@@ -85,7 +82,7 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
         <div
           ref={cardRef}
           onClick={cardClickHandler}
-          class={`cursor-pointer card-parent relative rounded-[2rem] w-[100%] h-[38vw] shadow-lg overflow-hidden cursor-pointer inline-block hover:shadow-orange-500/80 ${
+          class={`cursor-pointer card-parent relative rounded-[2rem] w-[100%] h-[100%] shadow-lg overflow-hidden cursor-pointer inline-block  ${
             clickedCard !== index
               ? ""
               : "transition-width duration-500 ease-in-out"
@@ -104,10 +101,10 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
                 id="card-content"
                 className="flex flex-col justify-between w-[100%] p-2 mb-4 opacity-100"
               >
-                <div className="font-bold text-3xl opacity-100 my-2">
+                <div className="font-bold text-3xl opacity-100 text-white text-center z-[999] my-2">
                   {data.title}
                 </div>
-                <hr className="w-[90%] mt-2 mb-1 border-1 border-orange-700 shadow-lg shadow shadow-orange-500/80" />
+                {/* <hr className="w-[90%] mt-2 mb-1 border-1 border-orange-700 shadow-lg shadow shadow-orange-500/80" /> */}
                 <div>{getSomeText()}</div>
               </div>
               <div className="absolute top-0 right-[6%] italic mt-2 text-md font-semibold">
@@ -121,14 +118,14 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
             id="card"
             className={` ${
               clickedCard === index ? "overflow-scroll" : "card-child"
-            } border rounded-[2rem] h-full w-full flex flex-col  bg-cover bg-center bg-no-repeat border-2 border-teal-600`}
+            } border rounded-[2rem] h-full w-full flex flex-col  bg-cover bg-center bg-no-repeat border-2 border-white`}
             style={getBgOfCard()}
           >
             {clickedCard === index && (
               <>
                 <button
                   onClick={backButtonHandler}
-                  className="absolute border border-2 border-teal-600 left-4 top-4 bg-teal-100  text-teal-600 pr-2 rounded hover:bg-teal-600 hover:text-white"
+                  className="absolute border border-2 border-slate-600 left-4 top-4 bg-slate-200 text-slate-600 pr-2 rounded hover:bg-slate-600 hover:text-white"
                 >
                   <MdArrowBackIosNew className="inline mt-[-2px]" />
                   Back
@@ -142,27 +139,31 @@ const Card = ({ data, clickCardHandler, index, showCard, clickedCard }) => {
                   </div>
                   <div>
                     {" "}
-                    <AiOutlineMessage onClick={()=>{setShowChatBox(true)}} className="h-9 w-9 opacity-70 hover:opacity-100" />{" "}
+                    <AiOutlineMessage
+                      onClick={() => {
+                        setShowChatBox(true);
+                      }}
+                      className="h-9 w-9 opacity-70 hover:opacity-100"
+                    />{" "}
                   </div>
                 </div>
               </>
             )}
-           
 
             {clickedCard === index && (
               <div className="h-full w-full">
-                <h1 className="text-teal-700 text-3xl font-bold mt-4 text-center">
+                <h1 className="text-slate-700 text-3xl font-bold mt-4 text-center">
                   {data.title}
                 </h1>
                 {data.fields.map((item, index) =>
                   item.type === "text" ? (
-                    <p className="text-teal-700 p-4 text-lg mt-2">
+                    <p className="text-slate-700 p-4 text-lg mt-2">
                       {item.value}
                     </p>
                   ) : (
                     <div
                       style={getImage(index)}
-                      className="h-[100%] w-[60%] mt-4 m-auto border rounded-[20px] border-[3px] border-teal-600"
+                      className="h-[100%] w-[60%] mt-4 m-auto border rounded-[20px] border-[3px] border-slate-600"
                     >
                       {" "}
                     </div>
