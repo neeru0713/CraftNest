@@ -36,7 +36,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="landing-page-container h-[90%] flex flex-col">
+    <div className="landing-page-container flex flex-col">
       <MdOutlineKeyboardArrowDown
         onClick={handlearrowDownClick}
         className="cursor-pointer absolute text-white h-[70px] w-[70px] top-[46%] left-[50%] landing-page-arrow"
@@ -64,11 +64,11 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div ref={downArrowRef} className="categories bg-[#F0FDF6] h-[25%]">
-        <h1 className="text-black text-left pl-10 text-5xl font-bold category-heading pt-10">
+      <div ref={downArrowRef} className="categories bg-[#F0FDF6] h-[28%]">
+        <h1 className="text-black text-left pl-10 text-5xl font-bold category-heading pt-6">
           Explore a World of <span className="underline">Genres!</span>
         </h1>
-        <div className="pt-10 flex justify-evenly w-[100%]">
+        <div className="pt-6 flex justify-evenly w-[100%]">
           <Box
             name="Photography"
             image={newbg}
@@ -102,16 +102,16 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="categories-section pl-10  bg-[#cfeefc] h-[25%]">
-        <h1 className="text-black  text-left text-5xl font-bold category-heading pt-10">
+      <div className="categories-section pl-10 flex flex-col bg-[#cfeefc] h-[22%]">
+        <h1 className="text-black  text-left text-4xl font-bold category-heading pt-10">
           <span className="underline">Inspire</span> through your Work{" "}
         </h1>
-        <p className="pt-4 text-2xl text-gray-700 w-[60%]">
+        <p className="pt-4 text-xl text-gray-700 w-[60%]">
           The evolution and growth of your ideas into tangible, impactful
           creations, making your projects not just endeavors but living
           expressions of your creativity and vision.
         </p>
-        <div className="pt-10 flex gap-1 flex-col justify-evenly w-[100%] text-2xl font-semibold">
+        <div className="pt-10 flex gap-1 flex-col justify-evenly w-[100%] text-x`xl font-semibold">
           <div className="flex items-center gap-2">
             {" "}
             <AiOutlineCheckCircle />{" "}

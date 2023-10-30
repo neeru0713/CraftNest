@@ -19,7 +19,7 @@ export const Box = ({ name, image, src }) => {
 
         <img
           src={src}
-          className="h-[350px] w-[100%] bg-cover bg-no-repeat bg-center"
+          className="h-[90%] w-[90%] bg-cover bg-no-repeat bg-center"
         />
         {hover && <div className="white-sheet absolute inset-0"></div>}
       </div>
