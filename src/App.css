@@ -184,22 +184,9 @@ background: linear-gradient(to top, #4e7e8a, #E6DADA); /* W3C, IE 10+/ Edge, Fir
 
 .landing-page-container {
   position: relative;
-  
+  height: 200vh;
 }
 
-@media only screen and (max-width: 1600px){
-  .landing-page-container {
-    height: 200vh;
-  } 
-}
-
-
-/* @media(max-width: 1600px){
-  .landing-page-container {
-    
-    height: 200vh;
-  }
-}  */
 
 
 .landing-image {
