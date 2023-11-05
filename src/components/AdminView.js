@@ -52,7 +52,7 @@ export const AdminView = () => {
   }
 
   return (
-    <div className="bg-slate-700">
+    <div className="bg-gray-900">
       <NavBar />
       <Table data={data} deleteRow={deleteRow} />
 

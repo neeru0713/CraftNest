@@ -6,7 +6,7 @@ const Table = ({data, deleteRow}) => {
 
   return (
     <div className="flex flex-col mt-14">
-      <h1 className="text-center text-4xl font-bold">
+      <h1 className="text-center text-white text-4xl font-bold">
         {" "}
         <span className="text-teal-600">P</span>roject{" "}
         <span className="text-teal-600">M</span>anagement{" "}

@@ -57,7 +57,7 @@ export const Carousel = ({ cards }) => {
   }
 
   return (
-    <div className="carousel h-[95vh] flex bg-slate-700 items-center w-[100%] px-8">
+    <div className="carousel h-[95vh] flex bg-gray-900 items-center w-[100%] px-8">
       {startIndex > 0 && clickedCard === -1 && (
         <button
           onClick={handleLeftClick}

@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import { ProjectInput } from "./ProjectInput";
 export const Contribute = () => {
   return (
-    <div className="bg-slate-700">
+    <div className="bg-gray-900">
       <NavBar />
       <ProjectInput />
     </div>

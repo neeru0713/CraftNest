@@ -31,9 +31,9 @@ export const ProjectDetail = () => {
   }, [params.category]);
 
   return (
-    <div className="bg-slate-700">
+    <div className="bg-gray-900">
       <Navbar />
-      <div className=" overflow-hidden">
+      <div className="bg-gray-900 overflow-hidden">
         <Carousel cards={data} />
       </div>
       <ChatApp />
