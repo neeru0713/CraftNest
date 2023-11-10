@@ -24,7 +24,7 @@ const deleteProject = async (req, res, next) => {
 const saveProject = async (req, res, next) => {
   try {
     const { user, fields, title, domain, projectUrl } = req.body;
-
+    await new Promise(resolve => setTimeout(resolve, 20000));
     let fieldArray = fields.map((field) => {
       return JSON.parse(field);
     });
@@ -32,6 +32,7 @@ const saveProject = async (req, res, next) => {
     let arrayWithSavedImages = fieldArray.map((field) => {
       if (field.type === 'image') {
         console.log(field.image)
+
         let imageData = fs.readFileSync(path.join(__dirname, '..', 'uploads', field.image))
         let extension = field.image.split('.')[1].toLowerCase()
         let contentType = `image/${extension}`
