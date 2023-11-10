@@ -44,7 +44,7 @@ const NavBar = ({ handleSubmit }) => {
         {user?.role === "admin" && (
           <Link
             to="/admin/manage"
-            className="border border-1 border-white text-white flex items-center p-2 bg-[#3998b5] hover:bg-[#4ac1e8] rounded hover:bg-white"
+            className="border border-1 border-white text-white flex items-center p-2 bg-[#3998b5] hover:bg-[#16809e] rounded"
           >
             <BsFillGearFill className="" />
             <p className="font-semibold ml-1">Admin</p>
@@ -65,7 +65,7 @@ const NavBar = ({ handleSubmit }) => {
             }}
             size="medium"
             name="Log out"
-            className="bg-[#3998b5] border-1 text-white hover:bg-[#4ac1e8]"
+            className="bg-[#3998b5] border-1 text-white hover:bg-[#16809e]"
           />
         ) : null}
 
@@ -83,7 +83,7 @@ const NavBar = ({ handleSubmit }) => {
               name="Log In"
               size="medium"
               bgColor="bg-none"
-              className="bg-[#3998b5] border-1 text-white hover:bg-[#4ac1e8]"
+              className="bg-[#3998b5] border-1 text-white hover:bg-[#16809e]"
             />
           </div>
         ) : (

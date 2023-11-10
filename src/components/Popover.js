@@ -45,9 +45,9 @@ export const Popover = () => {
 
       {show && (
         <div
-          className={`bg-white absolute ${
+          className={`bg-[#383838] absolute ${
             !user ? "right-[5%] " : "right-[10%]"
-          }  top-[50px] w-[180px] rounded flex flex-col`}
+          }  top-[50px] w-[180px] p-2 rounded-[14px] flex flex-col`}
           id="explore-popover"
           ref={popoverRef}
         >

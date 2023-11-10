@@ -11,7 +11,7 @@ const Button = ({
   handleHover = () => {},
   handleSubmit = () => {},
   size = "medium",
-  bgColor = "bg-transparent",
+  bgColor = "",
   hoverText = "black",
   contentColor = "",
 }) => {

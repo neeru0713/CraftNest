@@ -6,8 +6,8 @@ export const PopoverItem = ({ itemName, handleHover, showBg = false }) => {
     <Link to={`/projects/${itemName}`}>
       <div
         className={`popover-item ${
-          showBg ? "bg-[#abe9fc]" : ""
-        } text-left h-[100%] font-semibold `}
+          showBg ? "bg-[#545454]" : ""
+        } text-left h-[100%] font-semibold text-white rounded-[10px]`}
         onMouseEnter={(event) => handleHover(event, true)}
         onMouseLeave={(event) => handleHover(event, false)}
       >
