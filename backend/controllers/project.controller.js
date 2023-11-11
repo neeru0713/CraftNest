@@ -24,7 +24,7 @@ const deleteProject = async (req, res, next) => {
 const saveProject = async (req, res, next) => {
   try {
     const { user, fields, title, domain, projectUrl } = req.body;
-    await new Promise(resolve => setTimeout(resolve, 20000));
+    
     let fieldArray = fields.map((field) => {
       return JSON.parse(field);
     });
