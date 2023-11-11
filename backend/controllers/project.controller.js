@@ -31,9 +31,10 @@ const saveProject = async (req, res, next) => {
 
     let arrayWithSavedImages = fieldArray.map((field) => {
       if (field.type === 'image') {
-        console.log(field.image)
-
-        let imageData = fs.readFileSync(path.join(__dirname, '..', 'uploads', field.image))
+        
+        const fileName = field.image.toLowerCase().split(" ").join("-");
+        console.log("Filename to search : ", fileName)
+        let imageData = fs.readFileSync(path.join(__dirname, '..', 'uploads', fileName))
         let extension = field.image.split('.')[1].toLowerCase()
         let contentType = `image/${extension}`
         return {
