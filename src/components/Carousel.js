@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Skeleton from '@mui/material/Skeleton';
 import Card from "./Card";
 import {
   IoChevronBackCircleOutline,
   IoChevronForwardCircleOutline,
 } from "react-icons/io5";
-export const Carousel = ({ cards }) => {
+export const Carousel = ({ cards, isDataLoading }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(4);
   const [clickedCard, setClickCard] = useState(-1);
@@ -57,7 +58,19 @@ export const Carousel = ({ cards }) => {
   }
 
   return (
-    <div className="carousel h-[95vh] flex bg-gray-900 items-center w-[100%] px-8">
+
+<>
+
+{isDataLoading && (
+<div className="flex justify-around h-[95vh] mt-20">
+<Skeleton variant="rounded" animation="wave" width={310} height={800}  sx={{ bgcolor: '#243149' }} />
+<Skeleton variant="rounded" animation="wave" width={310} height={800}  sx={{ bgcolor: '#243149' }} />
+<Skeleton variant="rounded" animation="wave" width={310} height={800}  sx={{ bgcolor: '#243149' }} />
+<Skeleton variant="rounded" animation="wave" width={310} height={800}  sx={{ bgcolor: '#243149' }} />
+<Skeleton variant="rounded" animation="wave" width={310} height={800}  sx={{ bgcolor: '#243149' }} />
+</div>)}
+
+{!isDataLoading && ( <div className="carousel h-[95vh] flex bg-gray-900 items-center w-[100%] px-8">
       {startIndex > 0 && clickedCard === -1 && (
         <button
           onClick={handleLeftClick}
@@ -85,6 +98,11 @@ export const Carousel = ({ cards }) => {
           <IoChevronForwardCircleOutline />
         </button>
       )}
-    </div>
+    </div>)}
+
+</>
+    
+
+   
   );
 };

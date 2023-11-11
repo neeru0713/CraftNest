@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../config/config";
 import { BsFillTrashFill } from "react-icons/bs";
+import Skeleton from '@mui/material/Skeleton';
+
 import Table from "./Table";
 import NavBar from "./NavBar";
 export const AdminView = () => {
   const [data, setData] = useState([]);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+
   useEffect(() => {
     const url = `${API_URL}/project`;
+    setIsDataLoading(true)
 
     fetch(url)
       .then((response) => {
+        setTimeout(()=>{setIsDataLoading(false)}, 2000)
+        
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -24,7 +31,7 @@ export const AdminView = () => {
         // Handle errors occurred during the fetch
         console.error("Error:", error);
       });
-  }, [deleteRow]);
+  }, []);
 
   function deleteRow(event, index) {
     fetch(`${API_URL}/project/${data[index].title}`, {
@@ -52,9 +59,16 @@ export const AdminView = () => {
   }
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-900 min-h-[100vh]">
       <NavBar />
-      <Table data={data} deleteRow={deleteRow} />
+      {isDataLoading && 
+      <div>
+      <Skeleton className="mt-20 m-auto mb-2" variant="rounded" animation="wave" width={1500} height={60}  sx={{ bgcolor: '#243149' }} />
+      <Skeleton className="m-auto mb-20" variant="rounded" animation="wave" width={1500} height={750}  sx={{ bgcolor: '#243149' }} />
+      </div>}
+      
+
+      {!isDataLoading && <Table data={data} deleteRow={deleteRow} /> }
 
       {/* {data.map((item, index) => (
         <div className="flex border border-1 rounded w-[100%] justify-between items-center">
