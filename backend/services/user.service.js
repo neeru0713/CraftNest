@@ -39,7 +39,15 @@ async function createUser(userBody) {
    return await User.findOne({ email: email });
  }
 
+ async function getUserByName(name) {
+ 
+  const regex = new RegExp(name, 'i'); 
+  return await User.find({ email: { $regex: regex } });
+}
+
+
 module.exports = {
   createUser,
   getUserByEmail,
+  getUserByName,
 };

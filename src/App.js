@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Contribute } from "./components/Contribute";
 import { AdminView } from "./components/AdminView";
 import { ProjectDetail } from "./components/ProjectDetail";
+import {LiveChat} from "./components/LiveChat"
 
 import React, { useState, useEffect, createContext } from "react";
 import { API_URL } from "./config/config";
@@ -83,6 +84,9 @@ function App() {
                     element={<ProjectDetail />}
                   />
                   <Route path="/admin/manage" element={<AdminView />} />
+                  <Route path="/liveChat" element={<LiveChat />} />
+
+
                 </Routes>
               </ShowChatBoxContext.Provider>
             </CreatorContext.Provider>
@@ -94,3 +98,59 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import io from 'socket.io-client';
+
+// const socket = io('http://localhost:3000');
+
+// const App = () => {
+//     // State variables
+//     const [modalOpen, setModalOpen] = useState(false);
+//     const [email, setEmail] = useState('');
+//     const [chattingWith, setChattingWith] = useState(null);
+//     const [message, setMessage] = useState('');
+//     const [messages, setMessages] = useState([]);
+
+//     // Effect for handling chat messages
+//     useEffect(() => {
+//         socket.on('chat message', (data) => {
+//             setMessages((prevMessages) => [...prevMessages, data]);
+//         });
+//     }, []);
+
+//     // Function to handle chat requests
+//     const handleChatRequest = (receiverEmail) => {
+//         // Send chat request logic
+//         socket.emit('chat request', { sender: 'sender@example.com', receiver: receiverEmail });
+//     };
+
+//     // Function to handle accepting chat requests
+//     const handleAcceptChat = (senderEmail) => {
+//         // Handle accepted chat logic
+//         socket.emit('accept chat', { sender: senderEmail, receiver: 'receiver@example.com' });
+//         setChattingWith(senderEmail);
+//     };
+
+//     // Function to handle sending chat messages
+//     const handleSendMessage = () => {
+//         // Handle sending messages logic
+//         socket.emit('chat message', { sender: 'sender@example.com', receiver: chattingWith, message });
+//         setMessage('');  
+//     };
+
+//     return (
+//         <div>
+//             {/* UI components for live chat button, modal, and chat interface */}
+//         </div>
+//     );
+// };
+
+// export default App;

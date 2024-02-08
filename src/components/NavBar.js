@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { UserContext, ModalContext } from "../App";
@@ -12,12 +13,24 @@ const NavBar = ({ handleSubmit }) => {
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const { showModal, setShowModal } = useContext(ModalContext);
+  const navigate = useNavigate();
 
   function loginHandler() {
     // setIsModalOpen(true);
     setShowModal(true);
   }
 
+
+  function handleSubmit() {
+    console.log(user)
+    if(user){
+      navigate("/liveChat");
+    }
+    else{
+      alert("user is not login")
+    }
+    } 
+   
   return (
     <div className=" h-[50px] flex w-[100%] justify-between  zindex-custom">
       <div className="flex flex-col text-black items-center">
@@ -36,11 +49,18 @@ const NavBar = ({ handleSubmit }) => {
         {/* <img src={mylogo} className="h-[76px] w-[150px] mt-[-20px] z-[-1]" /> */}
       </div>
 
+      <button className="flex items-center gap-2 bg-white text-black absolute bottom-10 text-xl right-10 px-4 py-3 hover:bg-gray-100 rounded-md font-semibold">
+        <div className="h-3 w-3 bg-green-600 rounded-full"></div>
+        <p onClick={handleSubmit}>Live Chat</p></button>
+
       <div
         className={`${
           !user ? "w-[14%]" : user?.role === "admin" ? "w-[24%]" : "w-[18%]"
         }   h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
       >
+        
+       
+               
         {user?.role === "admin" && (
           <Link
             to="/admin/manage"

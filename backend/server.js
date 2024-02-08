@@ -6,6 +6,7 @@ const { User } = require("./models/user.model");
 
 const socket = require("socket.io");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const app = express();
 app.use(cors());
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
+app.use("/user", userRoutes);
 
 // node / express server
 const server = app.listen(8080, () => {
@@ -59,8 +61,6 @@ const io = socket(server, {
 
 // const server = createServer(app);
 // const io = new Server(server);
-
-
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
@@ -97,6 +97,25 @@ io.on("connection", (socket) => {
   // socket.on("join-room", (room) => {
   //   socket.join(room);
   // });
+
+  socket.on('chat request', async (data) => {
+    // Handle chat request logic
+    // Emit notification to the receiver
+    io.to(data.receiverSocket).emit('chat request', data);
+});
+
+socket.on('accept chat', (data) => {
+    // Handle accepted chat logic
+});
+
+socket.on('chat message', async (data) => {
+    // Handle storing chat messages
+    const chat = new Chat({ sender: data.sender, receiver: data.receiver, message: data.message });
+    await chat.save();
+    // Emit the message to the receiver
+    io.to(data.receiverSocket).emit('chat message', data);
+});
+
 });
 
 // server.listen(8080, () => {
