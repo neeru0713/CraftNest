@@ -234,7 +234,7 @@ export const ProjectInput = () => {
         </div>
       </div>
 
-      <div
+      < div
         id="main-section"
         className="flex flex-col ml-[7%] h-[100%] min-h-[92vh] gap-2 w-[80%]"
       >

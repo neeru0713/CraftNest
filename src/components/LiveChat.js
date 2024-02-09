@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import NavBar from "./NavBar";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaUserCircle } from "react-icons/fa";
+
 
 export const LiveChat = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -10,6 +11,8 @@ export const LiveChat = () => {
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const [chatList, setChatList] = useState([]);
   const [clickChatIndex, setClickChatIndex] = useState(-1);
+
+
 
   const handleMouseEnter = (index) => {
     setHoverItem(index);
@@ -28,6 +31,10 @@ export const LiveChat = () => {
     }
   };
 
+
+
+
+
   const handlePopOver = (event) => {
     // if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
     setPopoverVisible(false);
@@ -36,15 +43,22 @@ export const LiveChat = () => {
 
   const handleChatIndexClick = (index) => {
     setClickChatIndex(index);
+   
+
+   
   };
 
   useEffect(() => {
     document.addEventListener("click", handlePopOver);
   }, []);
 
+
+
   const handleSerachItemClick = (index) => {
+      debugger;
     let result = searchResults[index];
     setChatList([...chatList, result]);
+
   };
 
   return (
@@ -101,10 +115,11 @@ export const LiveChat = () => {
 
         <section className="w-[75%] h-full">
           <div className="flex w-full flex-col h-full">
-            <header className="flex m-2 gap-1">
-              <FaArrowLeft text-lg font-semibold />
-              <p className="text-black">user</p>
-            </header>
+            <span className="flex bg-blue-100 p-2 w-[100%] gap-5">
+              {<FaUserCircle className="text-3xl"/>}
+              {chatList[clickChatIndex]?.email}
+            </span>
+
             <div className="h-[80%]"></div>
             <SearchBar />
           </div>
