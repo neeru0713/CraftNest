@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import SearchBar from "./SearchBar";
+import CustomInput from "./CustomInput";
 import NavBar from "./NavBar";
 import { FaUserCircle } from "react-icons/fa";
-
 
 export const LiveChat = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [hoverItem, setHoverItem] = useState("");
   const popoverRef1 = useRef(null);
-  const [isPopoverVisible, setPopoverVisible] = useState(false);
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   const [chatList, setChatList] = useState([]);
   const [clickChatIndex, setClickChatIndex] = useState(-1);
-
-
+  const [messages, setMessages] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+   const [chatInput, setChatInput] = useState("");
 
   const handleMouseEnter = (index) => {
     setHoverItem(index);
@@ -22,57 +22,75 @@ export const LiveChat = () => {
     setHoverItem(-1);
   };
 
-  const updateSearchResult = (data) => {
-    setSearchResults(data);
-    if (data.length > 0) {
-      setPopoverVisible(true);
-    } else {
-      setPopoverVisible(false);
-    }
-  };
-
-
-
-
 
   const handlePopOver = (event) => {
     // if (popoverRef1.current && !popoverRef1.current.contains(event.target)) {
-    setPopoverVisible(false);
+    setIsPopoverVisible(false);
     // }
   };
 
   const handleChatIndexClick = (index) => {
     setClickChatIndex(index);
-   
-
-   
   };
 
   useEffect(() => {
     document.addEventListener("click", handlePopOver);
   }, []);
 
-
-
   const handleSerachItemClick = (index) => {
-      debugger;
     let result = searchResults[index];
     setChatList([...chatList, result]);
-
   };
+
+  const handleSendButton = () => {
+    const temp = [...messages, chatInput];
+    setMessages(temp);
+  };
+
+  const chatInputChange = (val) => {
+    setChatInput(val);
+  };
+
+  const searchUserInputChange = async (val) => {
+     try {
+      setSearchTerm(val)
+      if (val === "") {
+        setSearchResults([]);
+        return;
+      }
+      const response = await fetch(
+        `http://localhost:8080/user/${val}`
+      );
+      const data = await response.json();
+       setSearchResults(data.user);
+       
+        if (data.user.length > 0) {
+          setIsPopoverVisible(true);
+        } else {
+          setIsPopoverVisible(false);
+        }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
   return (
     <div className="h-screen bg-gray-900">
       <NavBar />
 
-      <div className="bg-gray-100 h-[60%] flex w-[70%] m-auto mt-40 bg-[#fcf9f9] border rounded-lg">
+      <div className="bg-gray-100 h-[70%] flex w-[70%] m-auto mt-[4%] bg-[#fcf9f9] border rounded-lg">
         <section className="flex flex-col w-[25%] h-full border-r-2 border-white bg-white relative">
-          <SearchBar updateSearchResult={updateSearchResult} />
+          <CustomInput
+            className="w-full"
+            showSearchIcon={true}
+            value={searchTerm}
+            onChanged={searchUserInputChange}
+          />
 
           {isPopoverVisible && (
             <ul
               ref={popoverRef1}
-              className="border bg-gray-100 rounded-lg p-2 absolute mt-2 left-14"
+              className="border bg-gray-100 rounded-lg p-2 absolute m-10"
             >
               {searchResults?.map((item, index) => (
                 <li
@@ -89,7 +107,8 @@ export const LiveChat = () => {
               ))}
             </ul>
           )}
-          <h2 className="text-black text-left mt-10 font-semibold text-lg mb-2 pl-3">
+          <h2 className="text-black text-left mt-10 font-semibold text-2
+          xl mt-4 pl-3">
             My Chats
           </h2>
           {chatList?.length > 0 && (
@@ -115,13 +134,35 @@ export const LiveChat = () => {
 
         <section className="w-[75%] h-full">
           <div className="flex w-full flex-col h-full">
-            <span className="flex bg-blue-100 p-2 w-[100%] gap-5">
-              {<FaUserCircle className="text-3xl"/>}
+            <span className="flex bg-[#3998b5] p-2 w-[100%] gap-5">
+              {<FaUserCircle className="text-3xl text-white" />}
               {chatList[clickChatIndex]?.email}
             </span>
 
-            <div className="h-[80%]"></div>
-            <SearchBar />
+            <ul className="h-[80%] overflow-y-scroll m-4">
+              {messages.map((item, index) => (
+                <li
+                  className="border rounded-md border-slate-350 w-[30%] p-2 bg-gray-200 text-semibold text-md mb-2"
+                  key={index}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="flex w-full items-center px-6 gap-1">
+              <CustomInput
+                className=" w-[100%]"
+                showSearchIcon={false}
+                value={chatInput}
+                onChanged={chatInputChange}
+              />
+              <button
+                className="rounded-xl text-white bg-[#3998b5] w-[10%] p-2"
+                onClick={handleSendButton}
+              >
+                Send
+              </button>
+            </div>
           </div>
         </section>
       </div>
