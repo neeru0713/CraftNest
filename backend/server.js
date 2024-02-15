@@ -64,10 +64,18 @@ const io = socket(server, {
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
-  socket.on("send-message", (msg, receiverSockeId) => {
-   
-    socket.to(receiverSockeId).emit("receive-message", msg, socket.id);
+  socket.on("send-message", (msg, receiverSocketId) => {
+   console.log(msg)
+   console.log("Sender socketid", socket.id)
+   console.log("Receiver socketid", receiverSocketId)
+
+    socket.to(receiverSocketId).emit("receive-message", msg, socket.id);
   });
+// jida e ek newa user jdo banda (new tab khulda ae) ohdo ohdi newi socket id v bandi ae
+// server nu and us client nu pta h new user di socket id , client save-socket-id name da event emit krda ae and is event nu oh apni user_id pejda ae fir sada server us event nu sunda ae and iss (saveSocketIdUserModel) function nu call krda ae, saveSocketIdUserModel func vich phile user te find method la
+// ke user lbega te ohde vich socket id nu paa ke user.save krwa dewega eda us user de document vich  socket id save ho jayegi 
+// purpose of saving socket.id
+// sender ne server nu receiver di id or msg pejega hun server oh receiver di id nu match krega ager receiver id match ho rhi ae onnu database receiver di socketid nu save kr dewega hun server ko sara kuj howega receiver di socket id v msg v . hun server ko receiver di socket id aa chuki hain iss krke server us particular socket nu sender da msg pej skda ae
 
   async function saveSocketIdInUserModel(userId) {
     try {

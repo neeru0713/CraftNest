@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,useContext } from "react";
 import CustomInput from "./CustomInput";
 import NavBar from "./NavBar";
 import { FaUserCircle } from "react-icons/fa";
+import { SocketContext} from "../App";
+
 
 export const LiveChat = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -13,6 +15,9 @@ export const LiveChat = () => {
   const [messages, setMessages] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
    const [chatInput, setChatInput] = useState("");
+   const {socket, setSocket} = useContext(SocketContext);
+  
+
 
   const handleMouseEnter = (index) => {
     setHoverItem(index);
@@ -45,6 +50,8 @@ export const LiveChat = () => {
   const handleSendButton = () => {
     const temp = [...messages, chatInput];
     setMessages(temp);
+    socket.emit('send-message', chatInput);
+
   };
 
   const chatInputChange = (val) => {

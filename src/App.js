@@ -29,6 +29,7 @@ function App() {
     setSocket(s);
   }, []);
 
+  // repopulate user context on page refresh
   useEffect(() => {
     let user = localStorage.getItem("craftnest_user");
     if (user) {
@@ -53,6 +54,7 @@ function App() {
           setUser(user);
           // Send a request to the server to save socket id in the user model
           socket.emit("save-socket-id", { userId: user._id });
+          console.log(user._id)
         }
       }
     }
