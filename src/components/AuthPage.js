@@ -4,7 +4,7 @@ import Button from "./Button";
 import { Notification } from "./Notification";
 import { API_URL } from "../config/config";
 // import useUser from "../customHooks/useUser"
-import { UserContext, ModalContext } from "../App";
+import { UserContext, ModalContext, SocketContext } from "../App";
 import { BiErrorCircle } from "react-icons/bi";
 
 const AuthPage = ({ togglePage, whichAuthPage }) => {
@@ -15,6 +15,7 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notifMsg, setNotifMsg] = useState("");
+  const {socket, setSocket} = useContext(SocketContext)
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const { showModal, setShowModal } = useContext(ModalContext);
@@ -87,6 +88,7 @@ const AuthPage = ({ togglePage, whichAuthPage }) => {
         // set the cookie with token returned from api
         document.cookie = `${name}=${value};expires=${expiry};path=/`;
         localStorage.setItem("craftnest_user", JSON.stringify(data?.user));
+        socket.emit('save-socket-id', {userId: data?.user?._id})
         setUser(data.user);
         setShowNotification(true);
         setNotifMsg(data.message);

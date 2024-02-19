@@ -24,8 +24,10 @@ const { User } = require("../models/user.model.js");
  * 200 status code on duplicate email - https://stackoverflow.com/a/53144807
  */
 async function createUser(userBody) {
+  console.log(" user body ", userBody)
   
   let userExists = await User.isEmailTaken(userBody.email);
+  console.log(" is userExists ", userExists)
   if (userExists) {
     // let error = new ApiError(httpStatus.OK, "Email already taken");
     // throw error;

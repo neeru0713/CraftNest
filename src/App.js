@@ -31,6 +31,7 @@ function App() {
 
   // repopulate user context on page refresh
   useEffect(() => {
+    console.log("use effect 2");
     let user = localStorage.getItem("craftnest_user");
     if (user) {
       let userObj = JSON.parse(user);
@@ -39,11 +40,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("use effect 2", socket);
+    console.log("use effect 3");
+    console.log("i want to see  what is socket's value : ", socket)
     // This code will run whenever the 'socket' state changes
-    if (Object.keys(socket).length > 0 && socket.connected) {
+    if (Object.keys(socket).length > 0) {
       let user = localStorage.getItem("craftnest_user");
-      console.log(user);
       if (user) {
         user = JSON.parse(user);
         console.log(socket?.id);
@@ -53,6 +54,7 @@ function App() {
         if (user) {
           setUser(user);
           // Send a request to the server to save socket id in the user model
+          console.log("user in client side")
           socket.emit("save-socket-id", { userId: user._id });
           console.log(user._id)
         }

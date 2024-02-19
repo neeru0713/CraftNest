@@ -3,6 +3,7 @@ const { authService, userService, tokenService } = require("../services");
 const register = async (req, res) => {
   try {
     let newUser = await userService.createUser(req.body);
+    
     const tokens = await tokenService.generateAuthTokens(newUser);
     let resObj = {
       user: newUser,
