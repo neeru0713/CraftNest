@@ -71,14 +71,14 @@ io.on("connection", (socket) => {
     if(receiverUser){
       socket.to(receiverUser.socketId).emit("receive-message", data);
     }
-   
-  });
+   });
 // jida e ek newa user jdo banda (new tab khulda ae) ohdo ohdi newi socket id v bandi ae
 // server nu and us client nu pta h new user di socket id , client save-socket-id name da event emit krda ae and is event nu oh apni user_id pejda ae fir sada server us event nu sunda ae and iss (saveSocketIdUserModel) function nu call krda ae, saveSocketIdUserModel func vich phile user te find method la
 // ke user lbega te ohde vich socket id nu paa ke user.save krwa dewega eda us user de document vich  socket id save ho jayegi 
 // purpose of saving socket.id
-// sender  server nu receiver di id or msg pejega hun server oh receiver di id nu match krega ager receiver id match ho rhi ae onnu database receiver di socketid nu save kr dewega hun server ko sara kuj howega receiver di socket id v msg v . hun server ko receiver di socket id aa chuki hain iss krke server us particular socket nu sender da msg pej skda ae
+// sender server nu receiver di id or msg pejega hun server oh receiver di id nu match krega ager receiver id match ho rhi ae onnu database receiver di socketid nu save kr dewega hun server ko sara kuj howega receiver di socket id v msg v . hun server ko receiver di socket id aa chuki hain iss krke server us particular socket nu sender da msg pej skda ae
 
+  
   async function saveSocketIdInUserModel(userId) {
     try {
       console.log("inside")
@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
   socket.on("save-socket-id", ({ userId }) => {
     // Update the user model in the database with the socket id
 
-    saveSocketIdInUserModel(userId);
+  saveSocketIdInUserModel(userId);
     
   });
   // socket.on("custom", (msg, id) => {

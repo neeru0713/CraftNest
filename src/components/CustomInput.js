@@ -6,9 +6,10 @@ const CustomInput = ({
   showSearchIcon,
   value,
   onChanged,
+  onKeyDown,
 }) => {
   const handleInputChange = async (event) => {
-   onChanged(event.target.value);
+    onChanged(event.target.value);
   };
 
   return (
@@ -19,6 +20,7 @@ const CustomInput = ({
         placeholder="Search..."
         value={value}
         onChange={handleInputChange}
+        onKeyDown={onKeyDown}
       />
       {showSearchIcon && (
         <IoSearch className="absolute right-[14%] text-lg text-[#dbd2d2]" />
