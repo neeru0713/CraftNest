@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,14 @@ import { BsFillGearFill } from "react-icons/bs";
 import { Popover } from "./Popover.js";
 
 const NavBar = ({ handleSubmit }) => {
+  const popoverRef = useRef(null);
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
+  const userMenuRef = useRef(false);
+  const [userMenuList, setUserMenuList] = useState(["Dashword", "AdminMode", "LogOut"]);
   const { showModal, setShowModal } = useContext(ModalContext);
+  const [isClickedIcon, setIsClickedIcon] = useState(false);
+  const [hoverItem, setHoverItem] = useState("");
   const navigate = useNavigate();
 
   function loginHandler() {
@@ -20,19 +25,45 @@ const NavBar = ({ handleSubmit }) => {
     setShowModal(true);
   }
 
+  function handleUserClickIcon() {
+    setIsClickedIcon(true);
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsClickedIcon(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   function handleSubmit() {
-    console.log(user)
-    if(user){
+    console.log(user);
+    if (user) {
       navigate("/liveChat");
+    } else {
+      alert("user is not login");
+    }
+  }
+  
+  const handleHover = (event,val) => {
+    if(val === true){
+      setHoverItem(event.target.innerText);
     }
     else{
-      alert("user is not login")
+      setHoverItem();
     }
-    } 
    
+  };
+
   return (
-    <div className=" h-[50px] flex w-[100%] justify-between  zindex-custom">
+    <div className=" h-[50px] flex w-[100%] justify-between  zindex-custom ">
       <div className="flex flex-col text-black items-center">
         {/* <Link to="/">
           <img src={mylogo} className="h-[76px]  mt-3" />
@@ -51,16 +82,14 @@ const NavBar = ({ handleSubmit }) => {
 
       <button className="flex items-center gap-2 bg-white text-black absolute bottom-10 text-xl right-10 px-4 py-3 hover:bg-gray-100 rounded-md font-semibold">
         <div className="h-3 w-3 bg-green-600 rounded-full"></div>
-        <p onClick={handleSubmit}>Live Chat</p></button>
+        <p onClick={handleSubmit}>Live Chat</p>
+      </button>
 
       <div
         className={`${
           !user ? "w-[14%]" : user?.role === "admin" ? "w-[24%]" : "w-[18%]"
         }   h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
       >
-        
-       
-               
         {user?.role === "admin" && (
           <Link
             to="/admin/manage"
@@ -77,7 +106,7 @@ const NavBar = ({ handleSubmit }) => {
           <Popover />
         </div>
 
-        {user ? (
+        {/* {user ? (
           <Button
             handleSubmit={() => {
               localStorage.removeItem("craftnest_user");
@@ -87,7 +116,7 @@ const NavBar = ({ handleSubmit }) => {
             name="Log out"
             className="bg-[#3998b5] border-1 text-white hover:bg-[#16809e]"
           />
-        ) : null}
+        ) : null} */}
 
         {/* <select className="w-[70%] border border-white bg-slate-900 text-white font-semibold h-[35px] rounded-md">
           <option>Select</option>
@@ -107,9 +136,30 @@ const NavBar = ({ handleSubmit }) => {
             />
           </div>
         ) : (
-          <div className="border rounded-full bg-[#4AC1E8] h-[40px] w-[40px] text-white font-semibold text-center p-1 mt-2 mb-[10px] text-xl">
-            {user.email.split("")[0].toUpperCase()}
-          </div>
+          <>
+            <div
+              onClick={handleUserClickIcon}
+              className="border rounded-full bg-[#4AC1E8] h-[40px] w-[40px] text-white font-semibold text-center p-1 mt-2 mb-[10px] text-xl relative cursor-pointer">
+              {user.email.split("")[0].toUpperCase()}
+            </div>
+            {isClickedIcon ? (
+              <ul
+                ref={userMenuRef}
+
+                className="flex flex-col absolute right-0 mt-[13%] mr-2 rounded-lg bg-[#383838] p-6 text-white font-semibold gap-5 cursor-pointer">
+                {userMenuList?.map((item, index) =>(
+                  <li 
+                  className={`${ item === hoverItem ? "bg-[#545454]" : ""}`}
+                  key={index}
+                  onMouseEnter={(event) => handleHover(event, true)}
+                  onMouseLeave={(event) => handleHover(event, false)}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </>
         )}
       </div>
 

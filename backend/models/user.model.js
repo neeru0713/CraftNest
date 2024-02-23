@@ -42,10 +42,21 @@ const userSchema = mongoose.Schema(
       defautlt: ""
     }
   },
-  // Create createdAt and updatedAt fields automatically
   {
-    timestamps: true,
-  }
+    chats: [
+      {
+        user: {},
+        messages: [],
+      },
+    ],
+  },
+  { timestamps: true }
+
+
+  
+    
+  
+    
 );
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Implement the isEmailTaken() static method

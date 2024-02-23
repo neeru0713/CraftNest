@@ -68,6 +68,13 @@ io.on("connection", (socket) => {
   socket.on("send-message", async (data) => {
     const receiverUser = await User.findOne({ _id : data.receiver._id});
    
+   
+    // get sender user from mongo query 
+    // obj = {}
+
+     // chats : [] -> obj { user: reviver , messages : [obj2] } , obj2 : {message : '', sender: '', reciver}
+
+   
     if(receiverUser){
       socket.to(receiverUser.socketId).emit("receive-message", data);
     }

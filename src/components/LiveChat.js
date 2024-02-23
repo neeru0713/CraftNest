@@ -19,16 +19,15 @@ export const LiveChat = () => {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-  
     if (Object.keys(socket).length > 0) {
       socket.on("receive-message", (data) => {
         let localStorageData = [];
         localStorageData.push(data.sender);
-        localStorageData = JSON.stringify(localStorageData)
+        localStorageData = JSON.stringify(localStorageData);
         localStorage.setItem("chats", localStorageData);
         setChatList([...chatList, data.sender]);
         setClickChatIndex(0);
-        
+
         setMessages((prevMessages) => [data, ...prevMessages]);
       });
     }
@@ -39,11 +38,10 @@ export const LiveChat = () => {
 
     let data = JSON.parse(dataString);
 
-    data.map((item, index) => {
-    
+    data?.map((item, index) => {
       setChatList([...chatList, item]);
     });
-  },[])
+  }, []);
 
   const handleMouseEnter = (index) => {
     setHoverItem(index);
@@ -77,31 +75,27 @@ export const LiveChat = () => {
       message: chatInput,
       sender: user,
       receiver: chatList[clickChatIndex],
-};
+    };
 
-   
-    
     const temp = [obj, ...messages];
     setMessages(temp);
     setChatInput("");
     socket.emit("send-message", obj);
     let data = [];
     data.push(obj.receiver);
-    data = JSON.stringify(data)
-    localStorage.setItem("chats", data)
+    data = JSON.stringify(data);
+    localStorage.setItem("chats", data);
+
+    
   };
 
-
   const handleKeyDown = (event) => {
-    debugger
+    debugger;
     if (event.key === "Enter") {
-       
       handleSendButton(event);
     }
-   
-  }
-  
-  
+  };
+
   const chatInputChange = (val) => {
     setChatInput(val);
   };
@@ -126,8 +120,6 @@ export const LiveChat = () => {
       console.error("Error fetching data:", error);
     }
   };
-
-
 
   return (
     <div className="h-screen bg-gray-900">
