@@ -14,8 +14,25 @@ const NavBar = ({ handleSubmit }) => {
   // const { user, setUser } = useUser();
   const { user, setUser } = useContext(UserContext);
   const userMenuRef = useRef(false);
-  const [userMenuList, setUserMenuList] = useState(["Dashword", "AdminMode", "LogOut"]);
+  const [userMenuList, setUserMenuList] = useState([
+    {
+      label: "Dashboard",
+      actionType: "link",
+      routeLink: "/user/dashboard",
+    },
+    {
+      label: "AdminMode",
+      actionType: "link",
+      routeLink: "/admin/manage",
+    },
+    {
+      label: "LogOut",
+      actionType: "button",
+      routeLink: null,
+    },
+  ]);
   const { showModal, setShowModal } = useContext(ModalContext);
+
   const [isClickedIcon, setIsClickedIcon] = useState(false);
   const [hoverItem, setHoverItem] = useState("");
   const navigate = useNavigate();
@@ -51,15 +68,20 @@ const NavBar = ({ handleSubmit }) => {
       alert("user is not login");
     }
   }
-  
-  const handleHover = (event,val) => {
-    if(val === true){
-      setHoverItem(event.target.innerText);
+
+  function userClickHandlerMenu(index) {
+    if(userMenuList[index].label === "LogOut"){
+      localStorage.setItem("craftnest_user", "")
+      setUser("")
     }
-    else{
+  }
+
+  const handleHover = (event, val) => {
+    if (val === true) {
+      setHoverItem(event.target.innerText);
+    } else {
       setHoverItem();
     }
-   
   };
 
   return (
@@ -86,45 +108,12 @@ const NavBar = ({ handleSubmit }) => {
       </button>
 
       <div
-        className={`${
-          !user ? "w-[14%]" : user?.role === "admin" ? "w-[24%]" : "w-[18%]"
-        }   h-[40px] flex justify-between items-center mr-[1rem] mt-2 pt-2 `}
+        className={`w-[18%] h-[40px] flex justify-evenly items-center mr-[1rem] mt-2 pt-2 `}
       >
-        {user?.role === "admin" && (
-          <Link
-            to="/admin/manage"
-            className="border border-1 border-white text-white flex items-center p-2 bg-[#3998b5] hover:bg-[#16809e] rounded"
-          >
-            <BsFillGearFill className="" />
-            <p className="font-semibold ml-1">Admin</p>
-            {/* <Button name="Manage" size="small" className="mb-2" /> */}
-          </Link>
-        )}
-
         {/* <Button name="Explore" size="small" bgColor="bg-none" /> */}
         <div className="w-[40%]">
           <Popover />
         </div>
-
-        {/* {user ? (
-          <Button
-            handleSubmit={() => {
-              localStorage.removeItem("craftnest_user");
-              setUser(null);
-            }}
-            size="medium"
-            name="Log out"
-            className="bg-[#3998b5] border-1 text-white hover:bg-[#16809e]"
-          />
-        ) : null} */}
-
-        {/* <select className="w-[70%] border border-white bg-slate-900 text-white font-semibold h-[35px] rounded-md">
-          <option>Select</option>
-          <option className="p-10" value="Blogs">Blogs</option>
-          <option value="Photography">Photography</option>
-          <option value="Webdesign">Webdesign</option>
-          <option value="Graphicdesign">Graphicdesign</option>
-        </select> */}
 
         {!user ? (
           <div onClick={loginHandler}>
@@ -139,26 +128,34 @@ const NavBar = ({ handleSubmit }) => {
           <>
             <div
               onClick={handleUserClickIcon}
-              className="border rounded-full bg-[#4AC1E8] h-[40px] w-[40px] text-white font-semibold text-center p-1 mt-2 mb-[10px] text-xl relative cursor-pointer">
+              className="border rounded-full bg-[#4AC1E8] h-[40px] w-[40px] text-white font-semibold text-center p-1 mt-2 mb-[10px] text-xl relative cursor-pointer"
+            >
               {user.email.split("")[0].toUpperCase()}
             </div>
             {isClickedIcon ? (
               <ul
                 ref={userMenuRef}
-
-                className="flex flex-col absolute right-0 mt-[13%] mr-2 rounded-lg bg-[#383838] p-6 text-white font-semibold gap-5 cursor-pointer">
-                {userMenuList?.map((item, index) =>(
-                  <li 
-                  className={`${ item === hoverItem ? "bg-[#545454]" : ""}`}
-                  key={index}
-                  onMouseEnter={(event) => handleHover(event, true)}
-                  onMouseLeave={(event) => handleHover(event, false)}
+                className="flex flex-col absolute right-4 top-14 rounded-lg bg-[#383838] text-white font-semibold cursor-pointer"
+              >
+                {userMenuList?.map((item, index) => (
+                  <li
+                    className={`px-5 py-2 rounded-lg ${
+                      item.label === hoverItem ? "bg-[#545454]" : ""
+                    }`}
+                    key={index}
+                    onMouseEnter={(event) => handleHover(event, true)}
+                    onMouseLeave={(event) => handleHover(event, false)}
                   >
-                    {item}
+                    {item.actionType === "button" ? (
+                      <div onClick={() => { userClickHandlerMenu(index) }}>{item.label}</div>
+                    ) : (
+                      <Link to={item.routeLink}>{item.label}</Link>
+                    )}
                   </li>
                 ))}
               </ul>
             ) : null}
+           
           </>
         )}
       </div>

@@ -9,6 +9,7 @@ import {LiveChat} from "./components/LiveChat"
 
 import React, { useState, useEffect, createContext } from "react";
 import { API_URL } from "./config/config";
+import Dashboard from "./components/Dashboard";
 
 export const UserContext = createContext();
 export const ModalContext = createContext();
@@ -88,6 +89,8 @@ function App() {
                     element={<ProjectDetail />}
                   />
                   <Route path="/admin/manage" element={<AdminView />} />
+                  <Route path="/user/dashboard" element={<Dashboard />} />
+
                   <Route path="/liveChat" element={<LiveChat />} />
 
 
